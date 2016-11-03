@@ -1,5 +1,7 @@
 <?php
 function scrie_sesizare($nume,  $judet,  $localitate,  $sectia,  $tip_problema,  $mesaj){
+    if($judet&&$localitate&&$tip_problema&&$mesaj)
+    {
     include("db_connect.php");
     $nume = mysqli_real_escape_string($conn, $nume);
     $judet = mysqli_real_escape_string($conn,$judet);
@@ -18,6 +20,10 @@ function scrie_sesizare($nume,  $judet,  $localitate,  $sectia,  $tip_problema, 
         echo  "Error: " . $sql . "<br>" . $conn->error;
     }
  $conn->close();
+    }
+    else {
+        echo "Toate câmpurile marcate cu * trebuie completate";
+    }
 }
 function afiseaza_sesizari_aprobate($conn){
     include("db_connect.php");
