@@ -12,9 +12,9 @@
         Sed placerat diam erat, ut consequat odio congue eu. Curabitur vestibulum ornare dolor, vel aliquet tellus tempus vitae. Donec imperdiet tincidunt tristique.</p>
 
     <?php 
-    include("db_connect.php");
+
     afiseaza_sesizari_aprobate($conn);
-    $conn->close();
+ 
     ?>
     </div>
   </div>
