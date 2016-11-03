@@ -3,6 +3,7 @@ $dbusername="root";
 $dbname="monitorizare";
 $dbserver="localhost";
 $dbpassword="";
+$error="";
     $conn = new mysqli($dbserver, $dbusername, $dbpassword, $dbname);
     mysqli_set_charset($conn, "utf8");
     if ($conn->connect_error) {
