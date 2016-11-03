@@ -13,7 +13,7 @@
 
     <?php 
 
-    afiseaza_sesizari_aprobate($conn);
+    afiseaza_sesizari_aprobate();
  
     ?>
     </div>
