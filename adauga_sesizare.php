@@ -75,15 +75,14 @@
   </div>
   <?php }
 else
-{
-    conectare_db();
-    $nume = mysqli_real_escape_string($conn, $_POST["nume"]);
-    $judet = mysqli_real_escape_string($conn, $_POST["judet"]);
-    $localitate = mysqli_real_escape_string($conn, $_POST["localitate"]);
-    $sectia = mysqli_real_escape_string($conn, $_POST["sectia"]);
-    $mesaj = mysqli_real_escape_string($conn, $_POST["mesaj"]);
-    $tip_problema = mysqli_real_escape_string($conn, $_POST["tip_problema"]);
+{ 
+    $nume =  $_POST["nume"];
+    $judet =  $_POST["judet"];
+    $localitate =  $_POST["localitate"];
+    $sectia =  $_POST["sectia"];
+    $mesaj =  $_POST["mesaj"];
+    $tip_problema =  $_POST["tip_problema"];
     scrie_sesizare($nume, $judet, $localitate, $sectia, $tip_problema, $mesaj);
-    deconectare_db();
+
     ?>
     <?php } ?>

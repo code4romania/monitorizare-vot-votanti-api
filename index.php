@@ -11,7 +11,11 @@
       <p>Proin suscipit turpis est, vitae dignissim dolor maximus vitae. Proin commodo pellentesque gravida. Maecenas elementum nulla a ultricies venenatis. Vestibulum venenatis ligula non consequat pharetra. Proin sagittis hendrerit diam egestas imperdiet.
         Sed placerat diam erat, ut consequat odio congue eu. Curabitur vestibulum ornare dolor, vel aliquet tellus tempus vitae. Donec imperdiet tincidunt tristique.</p>
 
-      <?php include('lista_sesizari.php');?>
+    <?php 
+    include("db_connect.php");
+    afiseaza_sesizari_aprobate($conn);
+    $conn->close();
+    ?>
     </div>
   </div>
   <?php include("footer.php");?>

@@ -1,18 +1,12 @@
 <?php
-global $conn;
-function conectare_db(){
-    include "db_connect.php";
-    $conn = new mysqli($dbserver, $dbusername, $dbpassword, $dbname);
-    mysqli_set_charset($conn, "utf8");
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-}
-function deconectare_db(){
-    $conn->close();
-}
-
-function scrie_sesizare($nume, $judet, $localitate, $sectia, $tip_problema, $mesaj){
+function scrie_sesizare($nume,  $judet,  $localitate,  $sectia,  $tip_problema,  $mesaj){
+    include("db_connect.php");
+    $nume = mysqli_real_escape_string($conn, $nume);
+    $judet = mysqli_real_escape_string($conn,$judet);
+    $localitate = mysqli_real_escape_string($conn, $localitate);
+    $sectia = mysqli_real_escape_string($conn, $sectia);
+    $mesaj = mysqli_real_escape_string($conn, $mesaj);
+    $tip_problema = mysqli_real_escape_string($conn, $tip_problema);
     $sql = "INSERT INTO sesizari (nume, judet, localitate, sectia, tip_problema, detalii)
     VALUES ('$nume', '$judet', '$localitate','$sectia', '$tip_problema', '$mesaj' )";
     if ($conn->query($sql) === TRUE) { ?>
@@ -21,8 +15,31 @@ function scrie_sesizare($nume, $judet, $localitate, $sectia, $tip_problema, $mes
   </div>
   <?php
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo  "Error: " . $sql . "<br>" . $conn->error;
     }
-    
+ $conn->close();
+}
+function afiseaza_sesizari_aprobate($conn){
+    include("db_connect.php");
+    $sql = "SELECT * from sesizari where status=1";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) { ?>
+    <div class="row">
+      <div class="col-md-3">
+        Pin
+      </div>
+      <div class="col-md-9">
+        <?php
+            echo $row['nume'].", ".$row['judet'].", ". $row['localitate'].", ". $row['sectia'].", ". $row['tip_problema'].", "."<br />";
+            echo "<p>".$row['detalii']."</p>";
+            ?>
+      </div>
+    </div>
+    <?php  }
+    } else {
+        echo "Nu sunt sesizari";
+    }
+    $conn->close();
 }
 ?>
