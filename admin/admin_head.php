@@ -14,7 +14,7 @@
     </script>
 
   </head>
-    <title>Administrare::Monitorizare vot </title>
+    <title>Administrare | Monitorizare vot </title>
   </head>
     <body>
     <h1>Salut, <?php echo $_SESSION['login_user']; ?></h1>

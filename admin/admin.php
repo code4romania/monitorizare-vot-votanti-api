@@ -14,6 +14,9 @@ if ($_SESSION['login_user']) {
 <div class="col-md-3">
   <a href = "admin.php?stare=2">Sesizari respinse</a>
 </div>
+<div class="col-md-3">
+  <a href = "logout.php">Sign Out</a>
+</div>
 </div>
 <div class="row">
 <?php
@@ -25,7 +28,7 @@ if (isset($_GET['stare'])) {
 afiseaza_sesizari($stare);?>
 </div>
 </div>
-    <a href = "logout.php">Sign Out</a>
+  
   </body>
   </html>
     <?php
