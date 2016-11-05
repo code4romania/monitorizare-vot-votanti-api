@@ -1,5 +1,5 @@
 <?php
-include( $_SERVER['DOCUMENT_ROOT'] . '/monitorizare-vot-votanti/db_connect.php' );
+include(  './../db_connect.php' );
    session_start();
    
    if($_SERVER["REQUEST_METHOD"] == "POST") {
