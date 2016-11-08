@@ -9,10 +9,10 @@ class IncidentTransformer extends Transformer
     {
     	return [
             'name' => $incident['first_name'] . ' ' . $incident['last_name'],
-            'type' => $incident['type'] ? $incident['type']['name'] : '',
+            'incidentType' => $incident['type'],
             'description' => $incident['description'],
-            'start_date' => $incident['start_date'],
-            'end_date' => $incident['end_date']
+            'startDate' => $incident['start_date'],
+            'endDate' => $incident['end_date']
         ];
     }
 }
