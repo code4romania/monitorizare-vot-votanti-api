@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Dingo\Api\Routing\Helpers;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Api\V1\Transformers\IncidentTransformer;
 
 use App\Incident;
 use App\User;
@@ -15,13 +16,20 @@ class IncidentController extends Controller
 {
     use Helpers;
 
+    protected $incidentTransformer;
+
+    function __construct(IncidentTransformer $incidentTransformer)
+    {
+        $this->incidentTransformer = $incidentTransformer;
+    }
+
     public function index()
     {
         $currentUser = JWTAuth::parseToken()->authenticate();
         $incidents = Incident::with('type')->get();
         
         return response()->json([
-            'data' => $this->transformCollection($incidents)
+            'data' => $this->incidentTransformer->transformCollection($incidents->all())
         ], 200);
     }
 
@@ -37,22 +45,7 @@ class IncidentController extends Controller
         }
 
         return response()->json([
-            'data' => $this->transform($incident->toArray())
+            'data' => $this->incidentTransformer->transform($incident->toArray())
         ], 200);
-    }
-
-    private function transformCollection($incidents)
-    {
-        return array_map([$this, 'transform'], $incidents->toArray());
-    }
-
-    private function transform($incident)
-    {
-        return [
-            'name' => $incident['name'],
-            'description' => $incident['description'],
-            'start_date' => $incident['start_date'],
-            'end_date' => $incident['end_date']
-        ];
     }
 }
