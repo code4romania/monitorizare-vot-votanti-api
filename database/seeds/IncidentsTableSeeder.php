@@ -26,7 +26,8 @@ class IncidentsTableSeeder extends Seeder
                 'incident_type_id' => $faker->numberBetween(1, 3),
                 'station_number' => $faker->numberBetween(50, 550),
                 'description' => $faker->realText(250),
-                'image_url' => $faker->imageUrl(320, 240, 'cats')
+                'image_url' => $faker->imageUrl(320, 240, 'cats'),
+                'status' => 'Approved'
             ]);
         }
     }

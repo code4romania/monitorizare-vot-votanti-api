@@ -12,7 +12,8 @@ class IncidentTransformer extends Transformer
             'incidentType' => $incident['type'],
             'description' => $incident['description'],
             'startDate' => $incident['start_date'],
-            'endDate' => $incident['end_date']
+            'endDate' => $incident['end_date'],
+            'status' => $incident['status']
         ];
     }
 }
