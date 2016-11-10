@@ -52,28 +52,24 @@ Access http://localhost:8000 or http://localhost:8000/api/check in the browser t
 * _recovery()_;
 * _reset()_;
 
-### Incident Endpoint
-
-* Get last incidents (default limit 20): GET /api/incidents
-* Get more incidents: GET /api/incidents?limit=100
-* Get page: GET /api/incidents?limit=10&page=3 (limit parameter is optional, will default to 20)
-* Get pending incidents: GET /api/incidents?status[]=Pending (by default only Approved will be returned)
-* Get pending and rejected: GET /api/incidents?status[]=Pending&status[]=Rejected
-
-* Approve incident: PUT /api/incidents/5/approve
-* Reject incident: PUT /api/incidents/5/reject
-* Delete incident: DELETE /api/incidents/5/reject
-
-http://localhost:8000/api/incidents?status[]=Pending&status[]=Approved&limit=5&page=3
-
-In order to work with them, you just have to make a POST request with the required data.
-
 You will need:
 
 * _login_: just email and password;
 * _signup_: whatever you like: you can specify it in the config file;
 * _recovery_: just the user email address;
 * _reset_: token, email, password and password confirmation;
+
+### IncidentController Endpoint
+
+* Get last incidents (default limit 20): GET /api/incidents
+* Get more incidents: _GET /api/incidents?limit=100_
+* Get page: _GET /api/incidents?limit=10&page=3+ (limit parameter is optional, will default to 20)
+* Get pending incidents: _GET /api/incidents?status[]=Pending_ (by default only Approved will be returned)
+* Get pending and rejected: _GET /api/incidents?status[]=Pending&status[]=Rejected_
+* Approve incident: _PUT /api/incidents/5/approve_
+* Reject incident: _PUT /api/incidents/5/reject_
+* Delete incident: _DELETE /api/incidents/5_
+
 
 ### A Separate File for Routes
 
