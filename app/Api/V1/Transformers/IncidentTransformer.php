@@ -13,7 +13,8 @@ class IncidentTransformer extends Transformer
             'description' => $incident['description'],
             'startDate' => $incident['start_date'],
             'endDate' => $incident['end_date'],
-            'status' => $incident['status']
+            'status' => $incident['status'],
+            'createdAt' => $incident['created_at']->toDateTimeString()
         ];
     }
 }

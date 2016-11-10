@@ -27,7 +27,7 @@ class IncidentsTableSeeder extends Seeder
                 'station_number' => $faker->numberBetween(50, 550),
                 'description' => $faker->realText(250),
                 'image_url' => $faker->imageUrl(320, 240, 'cats'),
-                'status' => 'Approved'
+                'status' => $faker->randomElement(['Approved', 'Pending', 'Rejected'])
             ]);
         }
     }

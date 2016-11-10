@@ -52,6 +52,16 @@ Access http://localhost:8000 or http://localhost:8000/api/check in the browser t
 * _recovery()_;
 * _reset()_;
 
+### IncidentController
+
+* Get last incidents (default limit 20): /api/incidents
+* Get more incidents: /api/incidents?limit=100
+* Get page: /api/incidents?limit=10&page=3 (limit parameter is optional, will default to 20)
+* Get pending incidents: /api/incidents?status[]=Pending (by default only Approved will be returned)
+* Get pending and rejected: /api/incidents?status[]=Pending&status[]=Rejected
+
+http://localhost:8000/api/incidents?status[]=Pending&status[]=Approved&limit=5&page=3
+
 In order to work with them, you just have to make a POST request with the required data.
 
 You will need:
@@ -92,11 +102,3 @@ After all, that's just a boilerplate! :)
 If you want to enable CORS for a specific route or routes group, you just have to use the _cors_ middleware on them.
 
 Thanks to the _barryvdh/laravel-cors_ package, you can handle CORS easily. Just check <a href="https://github.com/barryvdh/laravel-cors" target="_blank">the docs at this page</a> for more info.
-
-## Notes
-
-I currently removed the _VerifyCsrfToken_ middleware from the _$middleware_ array in _app/Http/Kernel.php_ file. If you want to use it in your project, just use the route middleware _csrf_ you can find, in the same class, in the _$routeMiddleware_ array.
-
-## Feedback
-
-I currently made this project for personal purposes. I decided to share it here to help anyone with the same needs. If you have any feedback to improve it, feel free to make a suggestion, or open a PR!
