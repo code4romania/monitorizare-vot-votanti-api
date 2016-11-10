@@ -47,25 +47,47 @@ class IncidentController extends Controller
         $incident = Incident::with('type')->find($incidentId);
 
         if (!$incident)
-        {
-            return response()->json([
-                'error' => ['message' => 'Record does not exist']
-            ], 404);
-        }
+            return $this->notFoundResponse();
 
         return response()->json([
-            'data' => $this->incidentTransformer->transform($incident->toArray())
+            'data' => $this->incidentTransformer->transform($incident)
         ], 200);
+    }
+
+    public function approve($incidentId)
+    {
+        $incident = Incident::find($incidentId);
+        if (!$incident)
+            return $this->notFoundResponse();
+
+        $incident->status = 'Approved';
+        if ($incident->save())
+            return $this->response->noContent();
+        else
+            return $this->response->error('could_not_update_incident', 500);
+    }
+
+    public function reject($incidentId)
+    {
+        $incident = Incident::find($incidentId);
+        if (!$incident)
+            return $this->notFoundResponse();
+        
+        $incident->status = 'Rejected';
+        if ($incident->save())
+            return $this->response->noContent();
+        else
+            return $this->response->error('could_not_update_incident', 500);
     }
 
     public function destroy($incidentId)
     {
         $incident = Incident::find($incidentId);
-        
-        if(!$incident)
-            throw new NotFoundHttpException;
 
-        if($incident->delete())
+        if (!$incident)
+            return $this->notFoundResponse();
+
+        if ($incident->delete())
             return $this->response->noContent();
         else
             return $this->response->error('could_not_delete_incident', 500);
@@ -81,5 +103,12 @@ class IncidentController extends Controller
             'previousPage' => $incidents->previousPageUrl(),
             'nextPage' => $incidents->nextPageUrl()
         ];
+    }
+
+    private function notFoundResponse()
+    {
+        return response()->json([
+            'error' => ['message' => 'Record does not exist']
+        ], 404);
     }
 }

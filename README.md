@@ -52,10 +52,12 @@ Access http://localhost:8000 or http://localhost:8000/api/check in the browser t
 * _recovery()_;
 * _reset()_;
 
-### IncidentController
+### Incident Endpoint
 
 * Get last incidents (default limit 20): /api/incidents
 * Get more incidents: /api/incidents?limit=100
+* Approve incident: /api/incidents/5/approve
+* Reject incident: /api/incidents/5/reject
 * Get page: /api/incidents?limit=10&page=3 (limit parameter is optional, will default to 20)
 * Get pending incidents: /api/incidents?status[]=Pending (by default only Approved will be returned)
 * Get pending and rejected: /api/incidents?status[]=Pending&status[]=Rejected
