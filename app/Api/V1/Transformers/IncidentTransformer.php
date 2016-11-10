@@ -8,6 +8,7 @@ class IncidentTransformer extends Transformer
     public function transform($incident)
     {
     	return [
+            'id' => $incident['id'],
             'name' => $incident['first_name'] . ' ' . $incident['last_name'],
             'incidentType' => $incident['type'],
             'description' => $incident['description'],

@@ -58,6 +58,19 @@ class IncidentController extends Controller
         ], 200);
     }
 
+    public function destroy($incidentId)
+    {
+        $incident = Incident::find($incidentId);
+        
+        if(!$incident)
+            throw new NotFoundHttpException;
+
+        if($incident->delete())
+            return $this->response->noContent();
+        else
+            return $this->response->error('could_not_delete_incident', 500);
+    }
+
     private function getPaginator($incidents)
     {
         return [

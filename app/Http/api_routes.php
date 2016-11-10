@@ -15,6 +15,7 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 		//Events
 		$api->get('incidents', 'App\Api\V1\Controllers\IncidentController@index');
 		$api->get('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@show');
+		$api->delete('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@destroy');
 	});
 
 	//Public routes
