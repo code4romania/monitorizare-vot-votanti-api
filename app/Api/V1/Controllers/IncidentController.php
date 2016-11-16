@@ -6,6 +6,7 @@ use JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Dingo\Api\Routing\Helpers;
+use App\Http\Requests\StoreIncidentRequest;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Api\V1\Transformers\IncidentTransformer;
@@ -52,6 +53,24 @@ class IncidentController extends Controller
         return response()->json([
             'data' => $this->incidentTransformer->transform($incident)
         ], 200);
+    }
+
+    public function store(StoreIncidentRequest $request)
+    {
+        $incident = new Incident([
+            'first_name' => $request->get('firstName'),
+            'last_name' => $request->get('lastName'),
+            'incidentType' => $request->get('incidentType'),
+            'description' => $request->get('description'),
+            'county' => $request->get('county'),
+            'city' => $request->get('city'),
+            'station_number' => $request->get('station_number')
+        ]);
+
+        if($incident->save())
+            return $this->response->created();
+        else
+            return $this->response->error('could_not_create_incident', 500);
     }
 
     public function approve($incidentId)

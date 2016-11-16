@@ -14,6 +14,7 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 		
 		//Events
 		$api->get('incidents', 'App\Api\V1\Controllers\IncidentController@index');
+		$api->post('incidents', 'App\Api\V1\Controllers\IncidentController@store');
 		$api->get('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@show');
 		$api->put('incidents/{incidentId}/approve', 'App\Api\V1\Controllers\IncidentController@approve');
 		$api->put('incidents/{incidentId}/reject', 'App\Api\V1\Controllers\IncidentController@reject');
