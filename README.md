@@ -29,10 +29,10 @@ php artisan serve
 ```
 
 Sometimes these folders need to be create manually if the user doesn't have the rights to do so
-/storage/framework/cache
-/storage/framework/sessions
-/storage/framework/views
-/storage/logs
+- /storage/framework/cache
+- /storage/framework/sessions
+- /storage/framework/views
+- /storage/logs
 
 
 Access http://localhost:8000 or http://localhost:8000/api/check in the browser to test the project
@@ -61,15 +61,16 @@ You will need:
 
 ### IncidentController Endpoint
 
-* Get last incidents (default limit 20): GET /api/incidents
-* Get more incidents: _GET /api/incidents?limit=100_
-* Get page: _GET /api/incidents?limit=10&page=3+ (limit parameter is optional, will default to 20)
-* Get pending incidents: _GET /api/incidents?status[]=Pending_ (by default only Approved will be returned)
-* Get pending and rejected: _GET /api/incidents?status[]=Pending&status[]=Rejected_
-* Approve incident: _PUT /api/incidents/5/approve_
-* Reject incident: _PUT /api/incidents/5/reject_
-* Delete incident: _DELETE /api/incidents/5_
+* _GET /api/incidents_ ( get last 20 incidents )
+* _GET /api/incidents?limit=100_ (Get more incidents)
+* _GET /api/incidents?limit=10&page=3+ (limit parameter is optional, will default to 20)
+* _GET /api/incidents?status[]=Pending_ (filter by state)
+* _GET /api/incidents?status[]=Pending&status[]=Rejected_ (get pending and rejected)
+* _POST /api/incidents_ (Create incident)
 
+* _PUT /api/incidents/5/approve_ (Approve incident - ADMIN)
+* _PUT /api/incidents/5/reject_ (Reject incident - ADMIN)
+* _DELETE /api/incidents/5_ (Delete incident - ADMIN)
 
 ### A Separate File for Routes
 
