@@ -34,8 +34,8 @@ class User extends Authenticatable
         $this->attributes['password'] = \Hash::make($value);
     }
 
-    public function events()
+    public function isAdmin()
     {
-        return $this->hasMany('App\Event');
+        return $this->role == 'admin';
     }
 }

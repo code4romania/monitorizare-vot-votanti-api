@@ -5,7 +5,9 @@ namespace App\Api\V1\Controllers;
 use JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use Dingo\Api\Routing\Helpers;
+use Dingo\Api\Exception\StoreResourceFailedException;
 use App\Http\Requests\StoreIncidentRequest;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -55,17 +57,25 @@ class IncidentController extends Controller
         ], 200);
     }
 
-    public function store(StoreIncidentRequest $request)
+    public function store(Request $request)
     {
-        $incident = new Incident([
-            'first_name' => $request->get('firstName'),
-            'last_name' => $request->get('lastName'),
-            'incidentType' => $request->get('incidentType'),
-            'description' => $request->get('description'),
-            'county' => $request->get('county'),
-            'city' => $request->get('city'),
-            'station_number' => $request->get('station_number')
-        ]);
+        $rules = [
+            'firstName' => 'required|max:200',
+            'lastName' => 'required|max:200',
+            'incidentType' => 'required',
+            'description' => 'required',
+            'county' => 'required',
+            'city' => 'required',
+            'stationNumber' => 'required'
+        ];
+        
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            throw new StoreResourceFailedException('Could not create new incident.', $validator->errors());
+        }
+        
+        $incident = new Incident($request->all());
 
         if($incident->save())
             return $this->response->created();
