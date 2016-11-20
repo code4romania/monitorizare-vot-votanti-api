@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 use App\IncidentType;
 use App\Incident;
 use App\User;
+use App\County;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,11 +19,13 @@ class DatabaseSeeder extends Seeder
 
         IncidentType::truncate();
         Incident::truncate();
+        County::truncate();
         User::truncate();
         Eloquent::unguard();
 
         $this->call(IncidentTypesTableSeeder::class);
         $this->call(IncidentsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(CountyTableSeeder::class);
     }
 }

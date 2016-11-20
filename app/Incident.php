@@ -15,4 +15,10 @@ class Incident extends Model
     {
     	return $this->belongsTo('App\IncidentType', 'incident_type_id', 'id');
     }
+    
+    // One to many inverse relation to County model
+    public function county()
+    {
+    	return $this->belongsTo('App\County', 'county', 'id');
+    }
 }

@@ -130,3 +130,10 @@ bootstrap/cache/*.php
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
+
+# Eclipse
+.project
+build.xml
+.buildpath
+.settings
+.externalToolBuilders
