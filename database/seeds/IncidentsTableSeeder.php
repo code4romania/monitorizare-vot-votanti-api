@@ -21,7 +21,7 @@ class IncidentsTableSeeder extends Seeder
             Incident::create([
                 'first_name' => $faker->firstName(),
                 'last_name' => $faker->lastName(),
-                'county' => $faker->city(),
+                'county_id' => $faker->city(),
                 'city' => $faker->state(),
                 'incident_type_id' => $faker->numberBetween(1, 3),
                 'station_number' => $faker->numberBetween(50, 550),
