@@ -19,6 +19,6 @@ class Incident extends Model
     // One to many inverse relation to County model
     public function county()
     {
-    	return $this->belongsTo('App\County', 'county', 'id');
+    	return $this->belongsTo('App\County', 'county_id', 'id');
     }
 }
