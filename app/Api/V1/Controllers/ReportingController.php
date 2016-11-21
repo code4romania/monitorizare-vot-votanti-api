@@ -10,6 +10,9 @@ class ReportingController extends Controller
 {
 	use Helpers;
 	
+	/**
+	 * Get incidents number.
+	 */
 	public function index()
 	{
 	
