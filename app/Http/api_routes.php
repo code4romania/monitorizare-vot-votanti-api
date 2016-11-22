@@ -11,9 +11,7 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 
 	//Auth user endpoints
 	$api->group(['middleware' => 'api.auth'], function ($api) {
-		$api->get('incidents', 'App\Api\V1\Controllers\IncidentController@index');
 		$api->post('incidents', 'App\Api\V1\Controllers\IncidentController@store');
-		$api->get('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@show');
 	});
 
 	//Admin only endpoints
@@ -25,4 +23,6 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 
 	//Public routes
 	$api->get('check', 'App\Api\V1\Controllers\PublicController@check');
+	$api->get('incidents', 'App\Api\V1\Controllers\IncidentController@index');
+	$api->get('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@show');
 });
