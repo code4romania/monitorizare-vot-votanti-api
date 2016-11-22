@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         User::truncate();
         Eloquent::unguard();
 		
-        $this->call(CountyTableSeeder::class);
+        $this->call(CountiesTableSeeder::class);
         $this->call(IncidentTypesTableSeeder::class);
         $this->call(IncidentsTableSeeder::class);
         $this->call(UsersTableSeeder::class);

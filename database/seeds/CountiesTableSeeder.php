@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\County;
 
-class CountyTableSeeder extends Seeder
+class CountiesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.

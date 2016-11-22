@@ -23,6 +23,11 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 
 	//Public routes
 	$api->get('check', 'App\Api\V1\Controllers\PublicController@check');
+
+	//Location
+	$api->get('counties', 'App\Api\V1\Controllers\LocationController@counties');
+
+	//Incidents
 	$api->get('incidents', 'App\Api\V1\Controllers\IncidentController@index');
 	$api->get('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@show');
 });

@@ -2,8 +2,6 @@
 
 namespace App\Api\V1\Transformers;
 
-use App\Incident;
-
 abstract class Transformer
 {
 
@@ -12,5 +10,5 @@ abstract class Transformer
         return array_map([$this, 'transform'], $items);
     }
 
-    public abstract function transform(Incident $item);
+    public abstract function transform($item);
 }

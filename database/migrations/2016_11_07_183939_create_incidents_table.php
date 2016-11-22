@@ -24,6 +24,9 @@ class CreateIncidentsTable extends Migration
             $table->string('image_url');
             $table->enum('status', ['Approved', 'Pending', 'Rejected'])->default('Approved');
             $table->timestamps();
+
+            $table->foreign('county_id')->references('id')->on('counties');
+            $table->foreign('incident_type_id')->references('id')->on('incident_types');
         });
     }
 

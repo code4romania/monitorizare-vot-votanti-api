@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCountyTable extends Migration
+class CreateCountiesTable extends Migration
 {
     /**
      * Run the migrations.

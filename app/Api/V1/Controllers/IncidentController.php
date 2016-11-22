@@ -10,7 +10,6 @@ use Dingo\Api\Routing\Helpers;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use App\Http\Requests\StoreIncidentRequest;
 use App\Http\Controllers\Controller;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Api\V1\Transformers\IncidentTransformer;
 
 use App\Incident;
@@ -34,6 +33,7 @@ class IncidentController extends Controller
         $status = Input::get('status')  ?: ['Approved'];
 
         $incidents = Incident::with('type')
+            ->with('county')
             ->whereIn('status', $status)
             ->orderBy('created_at', 'desc')
             ->paginate($limit);

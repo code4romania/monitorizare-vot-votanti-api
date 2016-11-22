@@ -10,7 +10,7 @@ class County extends Model
 	
 	public $timestamps = false;
 	
-	public function incident()
+	public function incidents()
 	{
 		return $this->hasMany('App\Incident');
 	}
