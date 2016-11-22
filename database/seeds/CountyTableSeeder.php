@@ -17,7 +17,7 @@ class CountyTableSeeder extends Seeder
     	while ($str = fgets($f))
     	{
     		County::create([
-    				'name' => $str
+    				'name' => str_replace("\n", "", $str)
     		]);
     	}
     }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Incident extends Model
 {
     protected $fillable = [
-    	'first_name', 'last_name', 'county', 'city', 'incident_type_id', 'station_number', 'description', 'image_url'
+    	'first_name', 'last_name', 'county_id', 'city', 'incident_type_id', 'station_number', 'description', 'image_url'
     ];
 
     // One to many inverse relation to IncidentType model
@@ -19,6 +19,6 @@ class Incident extends Model
     // One to many inverse relation to County model
     public function county()
     {
-    	return $this->belongsTo('App\County', 'county_id', 'id');
+    	return $this->belongsTo('App\County');
     }
 }

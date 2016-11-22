@@ -22,10 +22,10 @@ class DatabaseSeeder extends Seeder
         County::truncate();
         User::truncate();
         Eloquent::unguard();
-
+		
+        $this->call(CountyTableSeeder::class);
         $this->call(IncidentTypesTableSeeder::class);
         $this->call(IncidentsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
-        $this->call(CountyTableSeeder::class);
     }
 }
