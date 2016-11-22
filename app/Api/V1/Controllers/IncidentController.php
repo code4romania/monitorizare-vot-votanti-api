@@ -29,7 +29,6 @@ class IncidentController extends Controller
 
     public function index()
     {
-        $currentUser = JWTAuth::parseToken()->authenticate();
         $limit = Input::get('limit') ?: 20;
         $limit = min($limit, 200);
         $status = Input::get('status')  ?: ['Approved'];
