@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\County;
+use App\Helpers\CvsHandler;
 
 class CountiesTableSeeder extends Seeder
 {
@@ -12,13 +13,19 @@ class CountiesTableSeeder extends Seeder
      */
     public function run()
     {
-    	$f = fopen("resources/files/county/county.txt", "r");
-    	
-    	while ($str = fgets($f))
-    	{
-    		County::create([
-    				'name' => str_replace("\n", "", $str)
-    		]);
-    	}
+        $rows = $this->getCounties();
+
+        if ($rows) {
+            foreach ($rows as $key => $row) {
+                County::create(['name' => $row[0], 'code' =>  $row[1]]);
+            }
+        }       
+    }
+
+    private function getCounties()
+    {
+        $data = CvsHandler::convertToArray('resources/files/county/county.csv');
+        return $data;
     }
 }
+
