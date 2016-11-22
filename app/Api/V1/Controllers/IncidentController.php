@@ -63,7 +63,7 @@ class IncidentController extends Controller
             'lastName' => 'required|max:200',
             'incidentType' => 'required',
             'description' => 'required',
-            'county' => 'required',
+            'county_id' => 'required',
             'city' => 'required',
             'stationNumber' => 'required'
         ];
