@@ -9,7 +9,7 @@ class CountyTransformer extends Transformer
     	return [
             'id' => $county['id'],
             'name' => $county['name'],
-            'code' => ''
+            'code' => $county['code']
         ];
     }
 }
