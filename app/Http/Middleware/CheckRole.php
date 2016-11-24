@@ -20,7 +20,7 @@ class CheckRole
     {
         $currentUser = JWTAuth::parseToken()->authenticate();
 
-        if ($currentUser->isAdmin()) {
+        if (!$currentUser->isAdmin()) {
             throw new UnauthorizedHttpException('Unauthorized access.');
         }
 

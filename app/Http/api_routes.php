@@ -19,6 +19,7 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 		$api->put('incidents/{incidentId}/approve', 'App\Api\V1\Controllers\IncidentController@approve');
 		$api->put('incidents/{incidentId}/reject', 'App\Api\V1\Controllers\IncidentController@reject');
 		$api->delete('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@destroy');
+		$api->get('reports/incidents/county', 'App\Api\V1\Controllers\ReportingController@incidentsPerCounty');
 	});
 
 	//Public routes
