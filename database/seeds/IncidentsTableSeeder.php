@@ -23,7 +23,7 @@ class IncidentsTableSeeder extends Seeder
                 'last_name' => $faker->lastName(),
                 'county_id' => $faker->numberBetween(1, 42),
                 'city' => $faker->state(),
-                'incident_type_id' => $faker->numberBetween(1, 3),
+                'incident_type_id' => $faker->numberBetween(1, 10),
                 'station_number' => $faker->numberBetween(50, 550),
                 'description' => $faker->realText(250),
                 'image_url' => $faker->imageUrl(320, 240, 'cats'),

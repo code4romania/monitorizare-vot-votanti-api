@@ -30,5 +30,6 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 
 	//Incidents
 	$api->get('incidents', 'App\Api\V1\Controllers\IncidentController@index');
+	$api->get('incidents/types', 'App\Api\V1\Controllers\IncidentTypeController@index');
 	$api->get('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@show');
 });
