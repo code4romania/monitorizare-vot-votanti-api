@@ -9,7 +9,8 @@ class CountyTransformer extends Transformer
     	return [
             'id' => $county['id'],
             'name' => $county['name'],
-            'code' => $county['code']
+            'code' => $county['code'],
+    		'incidents' => $county->incidents()->count()
         ];
     }
 }

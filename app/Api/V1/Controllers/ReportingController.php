@@ -1,20 +1,58 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Api\V1\Controllers;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Dingo\Api\Routing\Helpers;
+use App\Http\Controllers\Controller;
+use App\Api\V1\Transformers\CountyTransformer;
+use App\County;
+use App\Incident;
 
 class ReportingController extends Controller
 {
 	use Helpers;
 	
-	/**
-	 * Get incidents number.
-	 */
-	public function index()
-	{
+	protected $countyTransformer;
 	
+	function __construct(CountyTransformer $countyTransformer)
+	{
+		$this->countyTransformer = $countyTransformer;
 	}
+	
+	/**
+	 * Get incidents number per county.
+	 */
+	public function incidentsPerCounty()
+	{
+		$counties = County::all();
+		
+		return response()->json(['data' => ['counties' => $this->countyTransformer->transformCollection($counties->all())]]);
+	}
+	
+	/**
+	 * Get incidents total.
+	 */
+	public function incidentsTotal()
+	{
+		$total = Incident::count();
+		
+		return response()->json(['data' => $total]);
+	}
+	
+	/**
+	 * Get most incidents county.
+	 */
+	public function mostIncidentsCounty()
+	{
+		$most = County::with('incidents')->get()->sortBy(function($county)
+					{
+					    return $county->incidents->count();
+					})->last();
+	
+		return response()->json(['data' => $most->name]);
+	}
+	
 }
