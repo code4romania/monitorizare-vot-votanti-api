@@ -30,7 +30,7 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 
 	//Location
 	$api->get('counties', 'App\Api\V1\Controllers\LocationController@counties');
-	$api->get('counties/{countyId}/citites', 'App\Api\V1\Controllers\LocationController@cities');
+	$api->get('counties/{countyId}/cities', 'App\Api\V1\Controllers\LocationController@cities');
 
 	//Incidents
 	$api->get('incidents', 'App\Api\V1\Controllers\IncidentController@index');
