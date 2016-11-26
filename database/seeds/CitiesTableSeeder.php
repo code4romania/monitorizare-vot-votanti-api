@@ -19,13 +19,16 @@ class CitiesTableSeeder extends Seeder
         $counties = CvsHandler::convertToArray('resources/files/county/county.csv');
 
         $currentCity = '';
+        $index = 0;
 
         if ($citites) {
             foreach ($citites as $key => $city) {
                 if ($currentCity != $city['name']) {
                     $currentCity = $city['name'];
+                    $index++;
+                    
                     City::create([
-                        'id' => $key,
+                        'id' => $index,
                         'county_id' => $this->getCountyId($city['countyCode'], $counties),
                         'name' => $city['name'],
                         'siruta_code' => $city['siruta_code'],

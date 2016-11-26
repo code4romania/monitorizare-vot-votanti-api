@@ -15,6 +15,43 @@ use App\Api\V1\Transformers\IncidentTransformer;
 use App\Incident;
 use App\User;
 
+/**
+ * @SWG\Get(
+ *     path="/api/incidents",
+ *     summary="Fetch incidents",
+ *     tags={"Incidents"},
+ *     description="Fetch tags filtered by state.",
+ *     operationId="findPetsByTags",
+ *     consumes={"application/json"},
+ *     produces={"application/json"},
+ *     @SWG\Parameter(
+ *         name="tags",
+ *         in="query",
+ *         description="Tags to filter by",
+ *         required=false,
+ *         type="array",
+ *         @SWG\Items(type="string"),
+ *         collectionFormat="multi"
+ *     ),
+ *     @SWG\Response(
+ *         response=200,
+ *         description="successful operation",
+ *         @SWG\Schema(
+ *             type="array",
+ *             @SWG\Items(ref="#/definitions/Incident")
+ *         ),
+ *     ),
+ *     @SWG\Response(
+ *         response="400",
+ *         description="Invalid tag value",
+ *     ),
+ *     security={
+ *         {
+ *             "monitorizare_auth": {"read:incidents"}
+ *         }
+ *     }
+ * )
+ */
 class IncidentController extends Controller
 {
     use Helpers;
@@ -44,6 +81,43 @@ class IncidentController extends Controller
         ], 200);
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/api/incidents/{incidentId}",
+     *     summary="Fetch incident by id",
+     *     tags={"Incidents"},
+     *     description="Fetch incident by id.",
+     *     operationId="findIncidentById",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="incidentID",
+     *         in="path",
+     *         description="Incident ID",
+     *         required=true,
+     *         type="number",
+     *         @SWG\Items(type="string"),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(
+     *             type="array",
+     *             @SWG\Items(ref="#/definitions/Incident")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid tag value",
+     *     ),
+     *     security={
+     *         {
+     *             "monitorizare_auth": {"read:incidents"}
+     *         }
+     *     }
+     * )
+     */
     public function show($incidentId)
     {
         $incident = Incident::with('type')->find($incidentId);
@@ -56,6 +130,28 @@ class IncidentController extends Controller
         ], 200);
     }
 
+    /**
+     * @SWG\Post(path="/api/incidents",
+     *   tags={"Incidents"},
+     *   summary="Create an incident",
+     *   description="",
+     *   operationId="createIncident",
+     *   produces={"application/json"},
+     *   @SWG\Parameter(
+     *     in="body",
+     *     name="body",
+     *     description="order placed for purchasing the pet",
+     *     required=false,
+     *     @SWG\Schema(ref="#/definitions/Incident")
+     *   ),
+     *   @SWG\Response(
+     *     response=200,
+     *     description="successful operation",
+     *     @SWG\Schema(ref="#/definitions/Incident")
+     *   ),
+     *   @SWG\Response(response=400,  description="Invalid Incident")
+     * )
+     */
     public function store(Request $request)
     {
         $rules = [

@@ -17,7 +17,7 @@ class CreateIncidentsTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->integer('county_id');
-            $table->string('city');
+            $table->integer('city_id');
             $table->string('incident_type_id');
             $table->string('station_number');
             $table->string('description');

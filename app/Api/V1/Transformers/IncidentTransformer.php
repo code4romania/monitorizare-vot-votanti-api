@@ -13,7 +13,7 @@ class IncidentTransformer extends Transformer
             'incidentType' => $incident['type'],
             'description' => $incident['description'],
             'county' => $incident->county,
-            'city' => $incident['city'],
+            'city' => $incident->city,
             'station_number' => $incident['station_number'],
             'image_url' => $incident['image_url'],
             'status' => $incident['status'],
