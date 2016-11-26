@@ -17,7 +17,11 @@ class CountiesTableSeeder extends Seeder
 
         if ($rows) {
             foreach ($rows as $key => $row) {
-                County::create(['name' => str_replace("\n", "", $row[0]), 'code' =>  $row[1]]);
+                County::create([
+                    'id' => $row[0],
+                    'name' => $row[1],
+                    'code' =>  $row[2]
+                ]);
             }
         }       
     }
