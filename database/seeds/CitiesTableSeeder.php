@@ -7,6 +7,7 @@ use App\Helpers\CitiesXMLParser;
 
 class CitiesTableSeeder extends Seeder
 {
+
     /**
      * Run the database seeds.
      *
@@ -14,17 +15,23 @@ class CitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        $rows = $this->getCities();
+        $citites = $this->getCities();
+        $counties = CvsHandler::convertToArray('resources/files/county/county.csv');
 
-        if ($rows) {
-            foreach ($rows as $key => $row) {
-                City::create([
-                    'id' => $key,
-                    'county_id' => $this->getCountyId($row[1]),
-                    'name' => $row[2],
-                    'siruta_code' => $row[3],
-                    'el_circle_code' => $row[4]
-                ]);
+        $currentCity = '';
+
+        if ($citites) {
+            foreach ($citites as $key => $city) {
+                if ($currentCity != $city['name']) {
+                    $currentCity = $city['name'];
+                    City::create([
+                        'id' => $key,
+                        'county_id' => $this->getCountyId($city['countyCode'], $counties),
+                        'name' => $city['name'],
+                        'siruta_code' => $city['siruta_code'],
+                        'el_circle_code' => $city['el_circle_code']
+                    ]);
+                }
             }
         }       
     }
@@ -33,18 +40,16 @@ class CitiesTableSeeder extends Seeder
     {
         
         $cities = CitiesXMLParser::convertToArray('resources/files/cities/cities.xml');
-        var_dump($cities);
+        return $cities;
     }
 
-    private function getCountyId($countyCode)
+    private function getCountyId($countyCode, $counties)
     {
-        $counties = CvsHandler::convertToArray('resources/files/county/county.csv');
         foreach ($counties as $key => $county) {
-            if ($county[1] == $countyCode) {
+            if ($county[2] == $countyCode) {
                 return $county[0];
             }
         }
         return 43;
     }
 }
-

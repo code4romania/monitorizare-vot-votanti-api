@@ -14,19 +14,17 @@ class CitiesXMLParser
 		}
 
 		$xml = simplexml_load_file($path);
-		foreach ($xml->cities as $item) {
-			$city = [
-				'countyCode' => (string)$item->JUD,
-				'name' => (string)$item->DENUMIRE_X0020_UAT,
-				'sirutaCode' => (string)$item->COD_X0020_SIRUTA[0],
-				'elCircleCode' => (string)$item->NR__x0020_CIRC_X0020_ELECT[0]
-			];
+		$cities = [];
 
-			var_dump($city);
-			dd();
-		  	foreach($element as $key => $val) {
-		   		echo "{$key}: {$val}";
-		  	}
+		foreach ($xml->cities as $item) {
+			array_push($cities, [
+				'countyCode' => (string)$item->JUD,
+				'name' => (string)$item->DENUMIRE_x0020_UAT,
+				'siruta_code' => (string)$item->COD_x0020_SIRUTA,
+				'el_circle_code' => (string)$item->NR__x0020_CIRC_x0020__ELECT
+			]);
 		}
+
+		return $cities;
 	}
 }

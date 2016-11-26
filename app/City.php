@@ -14,6 +14,6 @@ class City extends Model
 	
 	public function county()
 	{
-		return $this->hasOne('App\County');
+		return $this->belongsTo('App\County');
 	}
 }
