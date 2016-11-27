@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Api\V1\Transformers\CountyTransformer;
 use App\County;
 use App\Incident;
+use App\User;
 
 class ReportingController extends Controller
 {
@@ -22,6 +23,10 @@ class ReportingController extends Controller
 		$this->countyTransformer = $countyTransformer;
 	}
 	
+	public function observersTotal() {
+		$observers = User::where('role', '!=', 'admin')->get();
+		return response()->json(['data' => ['observers' => $observers->count()]]);
+	}
 	/**
 	 * Get incidents number per county.
 	 */
