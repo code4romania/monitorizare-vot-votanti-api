@@ -11,6 +11,7 @@ use App\Api\V1\Transformers\CountyTransformer;
 use App\County;
 use App\Incident;
 use App\User;
+use App\Api\V1\Transformers\CountyTransformerIncidentsPerCounty;
 
 class ReportingController extends Controller
 {
@@ -25,16 +26,17 @@ class ReportingController extends Controller
 	
 	public function observersTotal() {
 		$observers = User::where('role', '!=', 'admin')->get();
-		return response()->json(['data' => ['observers' => $observers->count()]]);
+		return response()->json(['data' => ['label' => 'observers', 'value' => $observers->count()]]);
 	}
 	/**
 	 * Get incidents number per county.
 	 */
 	public function incidentsPerCounty()
 	{
-		$counties = County::all();
+		$counties = County::get();
+		$countyTransformerIPC = new CountyTransformerIncidentsPerCounty();
 		
-		return response()->json(['data' => ['counties' => $this->countyTransformer->transformCollection($counties->all())]]);
+		return response()->json(['data' => $countyTransformerIPC->transformCollection($counties->all())]);
 	}
 	
 	/**
@@ -44,7 +46,7 @@ class ReportingController extends Controller
 	{
 		$total = Incident::count();
 		
-		return response()->json(['data' => $total]);
+		return response()->json(['data' => ['label' => 'incidents', 'value' => $total]]);
 	}
 	
 	/**

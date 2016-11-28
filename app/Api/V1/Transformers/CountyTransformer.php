@@ -6,10 +6,11 @@ class CountyTransformer extends Transformer
 {
     public function transform($county)
     {
+    	$countyArr = $county->toArray();
     	return [
-            'id' => $county['id'],
-            'name' => $county['name'],
-            'code' => $county['code'],
+            'id' => $countyArr['id'],
+            'name' => $countyArr['name'],
+            'code' => $countyArr['code'],
     		'incidents' => $county->incidents()->count()
         ];
     }

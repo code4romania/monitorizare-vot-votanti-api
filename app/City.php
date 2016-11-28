@@ -15,25 +15,25 @@ class City extends Model
      * @SWG\Property(format="int64")
      * @var int
      */
-	public $id;
+	//public $id;
 
 	/**
      * @SWG\Property(format="int64")
      * @var int
      */
-	public $countyId;
+	//public $countyId;
 
 	/**
      * @SWG\Property()
      * @var string
      */
-	public $name;
+	//public $name;
 
 	/**
      * @SWG\Property()
      * @var string
      */
-	public $sirutaCode;
+	//public $sirutaCode;
 
 	/**
      * @SWG\Property()
@@ -50,5 +50,10 @@ class City extends Model
 	public function county()
 	{
 		return $this->belongsTo('App\County');
+	}
+	
+	public function precincts()
+	{
+		return $this->hasMany('App\Precinct');
 	}
 }

@@ -22,7 +22,7 @@ class IncidentTypesTableSeeder extends Seeder
         IncidentType::create(['id' => 8, 'code' => '', 'name' => 'Turism electoral' ]);
         IncidentType::create(['id' => 9, 'code' => '', 'name' => 'Utilizarea fondurilor publice în scopuri electorale' ]);
         IncidentType::create(['id' => 10, 'code' => '', 'name' => 'Vot multiplu' ]);
-        IncidentType::create(['id' => 10, 'code' => 'OPN', 'name' => 'Deschidere sectie' ]);
-        IncidentType::create(['id' => 10, 'code' => 'NUM', 'name' => 'Numarare' ]);
+        IncidentType::create(['id' => 11, 'code' => 'OPN', 'name' => 'Deschidere sectie' ]);
+        IncidentType::create(['id' => 12, 'code' => 'NUM', 'name' => 'Numarare' ]);
     }
 }
