@@ -52,13 +52,13 @@ class Incident extends Model
      * @SWG\Property()
      * @var string
      */
-    public $stationNumber;
+    //public $stationNumber;
 
     /**
      * @SWG\Property()
      * @var string
      */
-    public $description;
+    //public $description;
 
     protected $fillable = [
     	'first_name', 'last_name', 'county_id', 'city_id', 'incident_type_id', 'station_number', 'description', 'image_url'
