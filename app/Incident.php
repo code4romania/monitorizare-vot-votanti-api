@@ -16,7 +16,7 @@ class Incident extends Model
      * @SWG\Property(format="int64")
      * @var int
      */
-    public $id;
+    //public $id;
 
     /**
      * @SWG\Property()
