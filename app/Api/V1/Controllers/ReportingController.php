@@ -18,6 +18,9 @@ use App\Api\V1\Transformers\PrecinctTransformerIncidentsPerPrecinct;
 use Illuminate\Support\Facades\DB;
 use App\Api\V1\Transformers\CountyTransformerIncidentsPerCountyOpening;
 use App\Api\V1\Transformers\CountyTransformerIncidentsPerCountyCounting;
+use App\Api\V1\Transformers\PrecinctTransformerIncidentsPerPrecinctOpening;
+use App\Api\V1\Transformers\PrecinctTransformerIncidentsTypePerPrecinct;
+use App\IncidentType;
 
 class ReportingController extends Controller
 {
@@ -105,7 +108,7 @@ class ReportingController extends Controller
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function incidentsOpeningPerPrecinct() {
-		
+		return $this->getIncidentsByType('OPN');
 	}
 	
 	/**
@@ -117,6 +120,38 @@ class ReportingController extends Controller
 		$countyTransformerIPCC = new CountyTransformerIncidentsPerCountyCounting();
 	
 		return response()->json(['data' => $countyTransformerIPCC->transformCollection($counties->all())]);
+	}
+	
+	/**
+	 * Get the number of incindets for counting per precinct.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function incidentsCountingPerPrecinct() {
+		return $this->getIncidentsByType('CNT');
+	}
+	
+	private function getIncidentsByType($type) {
+		$limit = Input::get('limit') ?: 20;
+		$limit = min($limit, 200);
+		
+		$precincts = Precinct::select(DB::raw('precincts.*, count(*) as `aggregate`'))
+		->where('incidents.incident_type_id', $this->getIncidentTypeId($type))
+		->join('incidents', 'precincts.id', '=', 'incidents.precinct_id')
+		->groupBy('precinct_id')
+		->orderBy('aggregate', 'desc')
+		->paginate($limit);
+		
+		$precinctTransformerITPP = new PrecinctTransformerIncidentsTypePerPrecinct();
+		
+		return response()->json([
+				'data' => $precinctTransformerITPP->transformCollection($precincts->all()),
+				'paginator' => $this->getPaginator($precincts)
+		], 200);
+	}
+	
+	private function getIncidentTypeId($typeCode) {
+		$type = IncidentType::where('code', $typeCode)->first();
+		return $type->id;
 	}
 	
 	private function getPaginator($incidents)
