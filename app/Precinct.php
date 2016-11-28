@@ -13,11 +13,11 @@ class Precinct extends Model
 	
 	public function county()
 	{
-		return $this->hasOne('App\County');
+		return $this->belongsTo('App\County');
 	}
 	
 	public function city()
 	{
-		return $this->hasOne('App\City');
+		return $this->belongsTo('App\City');
 	}
 }

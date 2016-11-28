@@ -12,6 +12,12 @@ use App\County;
 use App\Incident;
 use App\User;
 use App\Api\V1\Transformers\CountyTransformerIncidentsPerCounty;
+use App\Precinct;
+use Illuminate\Support\Facades\Input;
+use App\Api\V1\Transformers\PrecinctTransformerIncidentsPerPrecinct;
+use Illuminate\Support\Facades\DB;
+use App\Api\V1\Transformers\CountyTransformerIncidentsPerCountyOpening;
+use App\Api\V1\Transformers\CountyTransformerIncidentsPerCountyCounting;
 
 class ReportingController extends Controller
 {
@@ -60,6 +66,69 @@ class ReportingController extends Controller
 					})->last();
 	
 		return response()->json(['data' => $most->name]);
+	}
+	/**
+	 * Get the number of incidents per precinct.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function incidentsPerPrecinct() {
+		$limit = Input::get('limit') ?: 20;
+		$limit = min($limit, 200);
+		
+		$precincts = Precinct::select(DB::raw('precincts.*, count(*) as `aggregate`'))
+		->join('incidents', 'precincts.id', '=', 'incidents.precinct_id')
+		->groupBy('precinct_id')
+		->orderBy('aggregate', 'desc')
+		->paginate($limit);
+		
+		$precinctTransformerIPP = new PrecinctTransformerIncidentsPerPrecinct();
+		
+		return response()->json([
+				'data' => $precinctTransformerIPP->transformCollection($precincts->all()),
+				'paginator' => $this->getPaginator($precincts)
+		], 200);
+	}
+	
+	/**
+	 * Get the number of incindets for opening per county.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function incidentsOpeningPerCounty() {
+		$counties = County::get();
+		$countyTransformerIPCO = new CountyTransformerIncidentsPerCountyOpening();
+		
+		return response()->json(['data' => $countyTransformerIPCO->transformCollection($counties->all())]);
+	}
+	
+	/**
+	 * Get the number of incindets for opening per precinct.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function incidentsOpeningPerPrecinct() {
+		
+	}
+	
+	/**
+	 * Get the number of incindets for counting per county.
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function incidentsCountingPerCounty() {
+		$counties = County::get();
+		$countyTransformerIPCC = new CountyTransformerIncidentsPerCountyCounting();
+	
+		return response()->json(['data' => $countyTransformerIPCC->transformCollection($counties->all())]);
+	}
+	
+	private function getPaginator($incidents)
+	{
+		return [
+				'total' => $incidents->total(),
+				'currentPage' => $incidents->currentPage(),
+				'lastPage' => $incidents->lastPage(),
+				'limit' => $incidents->perPage(),
+				'previousPage' => $incidents->previousPageUrl(),
+				'nextPage' => $incidents->nextPageUrl()
+		];
 	}
 	
 }
