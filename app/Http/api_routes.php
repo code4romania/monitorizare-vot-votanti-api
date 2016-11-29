@@ -34,13 +34,14 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 	$api->get('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@show');
 	
 	//Reporting routes
-	$api->get('statistici/numar-observatori', 		  'App\Api\V1\Controllers\ReportingController@observersTotal');
-	$api->get('statistici/sesizari', 				  'App\Api\V1\Controllers\ReportingController@incidentsTotal');
-	$api->get('statistici/sesizari-judete', 			  'App\Api\V1\Controllers\ReportingController@incidentsPerCounty');
-	$api->get('statistici/sesizari-judet-top', 		  'App\Api\V1\Controllers\ReportingController@mostIncidentsCounty');
-	$api->get('statistici/sesizari-sectii', 			  'App\Api\V1\Controllers\ReportingController@incidentsPerPrecinct');
+	$api->get('statistici/numar-observatori', 		   'App\Api\V1\Controllers\ReportingController@observersTotal');
+	$api->get('statistici/sesizari', 				   'App\Api\V1\Controllers\ReportingController@incidentsTotal');
+	$api->get('statistici/sesizari-judete', 		   'App\Api\V1\Controllers\ReportingController@incidentsPerCounty');
+	$api->get('statistici/sesizari-judet-top', 		   'App\Api\V1\Controllers\ReportingController@mostIncidentsCounty');
+	$api->get('statistici/sesizari-sectii', 		   'App\Api\V1\Controllers\ReportingController@incidentsPerPrecinct');
 	$api->get('statistici/sesizari-deschidere-judete', 'App\Api\V1\Controllers\ReportingController@incidentsOpeningPerCounty');
 	$api->get('statistici/sesizari-deschidere-sectii', 'App\Api\V1\Controllers\ReportingController@incidentsOpeningPerPrecinct');
 	$api->get('statistici/sesizari-numarare-judete',   'App\Api\V1\Controllers\ReportingController@incidentsCountingPerCounty');
 	$api->get('statistici/sesizari-numarare-sectii',   'App\Api\V1\Controllers\ReportingController@incidentsCountingPerPrecinct');
+	$api->get('statistici/sesizari-tip-judete',   	   'App\Api\V1\Controllers\ReportingController@incidentTypesPerCountyTops');
 });

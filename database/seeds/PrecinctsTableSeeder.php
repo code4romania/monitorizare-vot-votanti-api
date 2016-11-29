@@ -31,7 +31,8 @@ class PrecinctsTableSeeder extends Seeder
 		}
 
 		$cityId = null;
-
+		
+		$precinctId = -1;
     	foreach ($workbook->createRowIterator(0) as $rowIndex => $rowData) {
 			if ($rowIndex > 2 && $rowData[0] != '') {
 
@@ -39,17 +40,20 @@ class PrecinctsTableSeeder extends Seeder
 					$cityId = $this->getCityId($rowData[1]);
 				}
 				
-				$precinct = new Precinct([
-					'county_id' => $this->getCountyId($rowData[0], $counties),
-					'city_id' =>  $cityId,
-					'siruta_code' =>  $rowData[2],
-					'circ_no' =>  $rowData[3],
-					'precinct_no' =>  $rowData[4],
-					'headquarter' =>  $rowData[5],
-					'address' =>  $rowData[6]
-				]);
-
-        		$precinct->save();
+				if($rowData[4] != $precinctId) {
+					$precinctId = $rowData[4];
+					$precinct = new Precinct([
+						'county_id' => $this->getCountyId($rowData[0], $counties),
+						'city_id' =>  $cityId,
+						'siruta_code' =>  $rowData[2],
+						'circ_no' =>  $rowData[3],
+						'precinct_no' =>  $rowData[4],
+						'headquarter' =>  $rowData[5],
+						'address' =>  $rowData[6]
+					]);
+	
+	        		$precinct->save();
+				}
 			}
    		}
     }

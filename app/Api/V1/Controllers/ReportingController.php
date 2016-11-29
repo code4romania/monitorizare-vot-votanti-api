@@ -21,6 +21,7 @@ use App\Api\V1\Transformers\CountyTransformerIncidentsPerCountyCounting;
 use App\Api\V1\Transformers\PrecinctTransformerIncidentsPerPrecinctOpening;
 use App\Api\V1\Transformers\PrecinctTransformerIncidentsTypePerPrecinct;
 use App\IncidentType;
+use App\Api\V1\Transformers\IncidentTypeTransformerReport;
 
 class ReportingController extends Controller
 {
@@ -93,7 +94,7 @@ class ReportingController extends Controller
 	}
 	
 	/**
-	 * Get the number of incindets for opening per county.
+	 * Get the number of incidents for opening per county.
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function incidentsOpeningPerCounty() {
@@ -104,7 +105,7 @@ class ReportingController extends Controller
 	}
 	
 	/**
-	 * Get the number of incindets for opening per precinct.
+	 * Get the number of incidents for opening per precinct.
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function incidentsOpeningPerPrecinct() {
@@ -112,7 +113,7 @@ class ReportingController extends Controller
 	}
 	
 	/**
-	 * Get the number of incindets for counting per county.
+	 * Get the number of incidents for counting per county.
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function incidentsCountingPerCounty() {
@@ -123,7 +124,7 @@ class ReportingController extends Controller
 	}
 	
 	/**
-	 * Get the number of incindets for counting per precinct.
+	 * Get the number of incidents for counting per precinct.
 	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function incidentsCountingPerPrecinct() {
@@ -147,6 +148,27 @@ class ReportingController extends Controller
 				'data' => $precinctTransformerITPP->transformCollection($precincts->all()),
 				'paginator' => $this->getPaginator($precincts)
 		], 200);
+	}
+	
+	/**
+	 * Get the number of incidents per incident type per county
+	 */
+	public function incidentTypesPerCountyTops() {
+		$incidentTypeTransformerR = new IncidentTypeTransformerReport();
+		$output = array('data' => array());
+		$incidentTypes = IncidentType::all();
+		foreach ($incidentTypes as $incidentType) {
+			$incidentTypeStructures = Incident::select(DB::raw('incidents.*, count(*) as `incidents_no`'))
+											   ->where('incident_type_id', $incidentType->id)
+											   ->groupBy('county_id')
+											   ->orderBy('incidents_no', 'desc')
+											   ->get();
+			
+			array_push($output['data'], array($incidentType->name => array("first" => $incidentTypeTransformerR->transformCollection($incidentTypeStructures->take(5)->all()),
+																		   "last"  => $incidentTypeTransformerR->transformCollection($incidentTypeStructures->reverse()->take(5)->all()))));
+		}
+		
+		return response()->json($output);
 	}
 	
 	private function getIncidentTypeId($typeCode) {
