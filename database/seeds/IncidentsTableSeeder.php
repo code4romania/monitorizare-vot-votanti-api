@@ -16,15 +16,15 @@ class IncidentsTableSeeder extends Seeder
 
         $faker = Faker::create();
 
-        foreach (range(1, 40) as $index)
+        foreach (range(1, 141) as $index)
         {
             Incident::create([
                 'first_name' => $faker->firstName(),
                 'last_name' => $faker->lastName(),
                 'county_id' => $faker->numberBetween(1, 42),
                 'city_id' => $faker->numberBetween(1, 3000),
+                'precinct_id' => $faker->numberBetween(1, 90000),
                 'incident_type_id' => $faker->numberBetween(1, 10),
-                'station_number' => $faker->numberBetween(50, 550),
                 'description' => $faker->realText(250),
                 'image_url' => $faker->imageUrl(320, 240, 'cats'),
                 'status' => $faker->randomElement(['Approved', 'Pending', 'Rejected'])

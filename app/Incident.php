@@ -52,7 +52,7 @@ class Incident extends Model
      * @SWG\Property()
      * @var string
      */
-    //public $stationNumber;
+    public $precinctId;
 
     /**
      * @SWG\Property()
@@ -80,5 +80,11 @@ class Incident extends Model
     public function city()
     {
         return $this->belongsTo('App\City');
+    }
+
+    // One to many inverse relation to Precinct model
+    public function precinct()
+    {
+        return $this->belongsTo('App\Precinct');
     }
 }

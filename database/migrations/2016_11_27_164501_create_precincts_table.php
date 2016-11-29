@@ -21,7 +21,6 @@ class CreatePrecinctsTable extends Migration
     		$table->integer('precinct_no');
     		$table->string('headquarter');
     		$table->string('address');
-    		$table->text('settlements');
     		$table->timestamps();
     	});
     }
