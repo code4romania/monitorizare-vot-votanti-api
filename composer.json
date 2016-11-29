@@ -11,7 +11,7 @@
         "dingo/api": "1.0.*@dev",
         "barryvdh/laravel-cors": "^0.7.1",
         "zircote/swagger-php": "^2.0",
-        "phpoffice/phpexcel": "1.8.1"
+        "akeneo-labs/spreadsheet-parser": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

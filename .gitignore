@@ -17,6 +17,10 @@ logs
 *.log
 npm-debug.log*
 
+### Azure ###
+azuredeploy.json
+EULA_ENU.rtf
+
 # Runtime data
 pids
 *.pid

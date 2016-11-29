@@ -14,8 +14,12 @@ class IncidentTransformer extends Transformer
             'description' => $incident['description'],
             'county' => $incident->county,
             'city' => $incident->city,
-            'station_number' => $incident['precinct_id'],
-            'image_url' => $incident['image_url'],
+            'precinct' => [
+                'id' => $incident['precinct']['id'],
+                'electoralCircleId' => $incident['precinct']['circ_no'],
+                'precinctNumber' => $incident['precinct']['precinct_no'],
+                'address' => $incident['precinct']['address']
+            ],
             'status' => $incident['status'],
             'createdAt' => $incident['created_at']->toDateTimeString()
         ];

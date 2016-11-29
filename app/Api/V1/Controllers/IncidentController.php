@@ -71,6 +71,7 @@ class IncidentController extends Controller
 
         $incidents = Incident::with('type')
             ->with('county')
+            ->with('precinct')
             ->whereIn('status', $status)
             ->orderBy('created_at', 'desc')
             ->paginate($limit);
