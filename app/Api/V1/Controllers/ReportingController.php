@@ -7,70 +7,42 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Dingo\Api\Routing\Helpers;
 use App\Http\Controllers\Controller;
-use App\Api\V1\Transformers\CountyTransformer;
-use App\County;
-use App\Incident;
-use App\User;
-use App\Api\V1\Transformers\CountyTransformerIncidentsPerCounty;
-use App\Precinct;
 use Illuminate\Support\Facades\Input;
-use App\Api\V1\Transformers\PrecinctTransformerIncidentsPerPrecinct;
 use Illuminate\Support\Facades\DB;
+
+use App\Api\V1\Transformers\PrecinctTransformerIncidentsPerPrecinct;
 use App\Api\V1\Transformers\CountyTransformerIncidentsPerCountyOpening;
 use App\Api\V1\Transformers\CountyTransformerIncidentsPerCountyCounting;
 use App\Api\V1\Transformers\PrecinctTransformerIncidentsPerPrecinctOpening;
 use App\Api\V1\Transformers\PrecinctTransformerIncidentsTypePerPrecinct;
-use App\IncidentType;
 use App\Api\V1\Transformers\IncidentTypeTransformerReport;
+
+use App\County;
+use App\Incident;
+use App\User;
+use App\Precinct;
+use App\IncidentType;
 
 class ReportingController extends Controller
 {
 	use Helpers;
-	
-	protected $countyTransformer;
-	
-	function __construct(CountyTransformer $countyTransformer)
-	{
-		$this->countyTransformer = $countyTransformer;
-	}
-	
-	public function observersTotal() {
-		$observers = User::where('role', '!=', 'admin')->get();
-		return response()->json(['data' => ['label' => 'observers', 'value' => $observers->count()]]);
-	}
-	/**
-	 * Get incidents number per county.
-	 */
-	public function incidentsPerCounty()
-	{
-		$counties = County::get();
-		$countyTransformerIPC = new CountyTransformerIncidentsPerCounty();
-		
-		return response()->json(['data' => $countyTransformerIPC->transformCollection($counties->all())]);
-	}
-	
+
 	/**
 	 * Get incidents total.
 	 */
 	public function incidentsTotal()
 	{
-		$total = Incident::count();
-		
-		return response()->json(['data' => ['label' => 'incidents', 'value' => $total]]);
+		return response()->json(['data' => ['totalIncidents' => Reports::totalIncidents()]]);
 	}
-	
+
 	/**
-	 * Get most incidents county.
+	 * Get incidents number per county.
 	 */
-	public function mostIncidentsCounty()
+	public function incidentsPerCounty()
 	{
-		$most = County::with('incidents')->get()->sortBy(function($county)
-					{
-					    return $county->incidents->count();
-					})->last();
-	
-		return response()->json(['data' => $most->name]);
+		return response()->json(['data' => Reports::countiesWithIncidents()]);
 	}
+
 	/**
 	 * Get the number of incidents per precinct.
 	 * @return \Illuminate\Http\JsonResponse
