@@ -9,6 +9,8 @@ use App\Api\V1\Transformers\CityTransformer;
 
 use App\County;
 use App\City;
+use App\Precinct;
+use App\Api\V1\Transformers\CityTransformerAddress;
 
 class LocationController extends Controller
 {
@@ -98,10 +100,35 @@ class LocationController extends Controller
      */
     public function cities($countyId)
     {
-        $cities = City::where('county_id', $countyId)->get();
-        
-        return response()->json([
-            'data' => $this->cityTransformer->transformCollection($cities->all())
-        ], 200);
+    	if($countyId == $this->getDiasporaCountyId()) {
+    		$cityTransformerAddress = new CityTransformerAddress();
+    		return response()->json([
+    				'data' => $cityTransformerAddress->transformCollection($this->getAddressesForDiaspora($countyId)->all())
+    		], 200);
+    	}
+    	else {
+	        $cities = City::where('county_id', $countyId)->get();
+	        
+	        return response()->json([
+	            'data' => $this->cityTransformer->transformCollection($cities->all())
+	        ], 200);
+    	}
+    }
+    
+    /**
+     * Get addresses for Diaspora hack where you get address instead of city
+     */
+    private function getAddressesForDiaspora($countyId) {
+    	return Precinct::where('county_id', $countyId)->get();
+    }
+    
+    /**
+     * Get the diaspora county ID
+     * 
+     * @return integer
+     */
+    private function getDiasporaCountyId() {
+    	$county = County::where('code', 'DI')->first();
+    	return $county->id;
     }
 }
