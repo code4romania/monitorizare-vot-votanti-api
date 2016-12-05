@@ -17,7 +17,6 @@ class IncidentTypesTableSeeder extends Seeder
         IncidentType::create(['id' => 3, 'code' => 'MED', 'name' => 'Media & internet' ]);
         IncidentType::create(['id' => 4, 'code' => 'MIT', 'name' => 'Mită electorală' ]);
         IncidentType::create(['id' => 5, 'code' => 'NBE', 'name' => 'Nereguli în funcționarea birourilor electorale' ]);
-        IncidentType::create(['id' => 6, 'code' => 'ACC', 'name' => 'Observatori acreditați' ]);
         IncidentType::create(['id' => 7, 'code' => 'OBP', 'name' => 'Probleme legate de observatorii acreditați' ]);
         IncidentType::create(['id' => 8, 'code' => 'TEL', 'name' => 'Turism electoral' ]);
         IncidentType::create(['id' => 9, 'code' => 'FEL', 'name' => 'Utilizarea fondurilor publice în scopuri electorale' ]);
