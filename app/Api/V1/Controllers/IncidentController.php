@@ -69,8 +69,9 @@ class IncidentController extends Controller
     {
         $limit = Input::get('limit') ?: 20;
         $limit = min($limit, 200);
-        $status = Input::get('status')  ?: ['Approved'];
-
+        $status = Input::get('status')  ?: 'Approved';
+		$status = array($status);
+		
         $incidents = Incident::with('type')
             ->with('county')
             ->with('precinct')
