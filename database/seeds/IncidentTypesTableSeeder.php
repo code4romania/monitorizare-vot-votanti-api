@@ -43,12 +43,6 @@ class IncidentTypesTableSeeder extends Seeder
 				'name' => 'Nereguli în funcționarea birourilor electorale'
 		]);
 		IncidentType::create([
-				'id' => 6,
-				'label' => 'IT_OBSERVERS',
-				'code' => 'ACC',
-				'name' => 'Observatori acreditați'
-		]);
-		IncidentType::create([
 				'id' => 7,
 				'label' => 'IT_OBSERVERS',
 				'code' => 'OBP',
