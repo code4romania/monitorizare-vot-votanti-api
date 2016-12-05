@@ -214,5 +214,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
+		
+	'wsServerAddr' => 'ws://127.0.0.1:8889'
 
 ];

@@ -15,6 +15,8 @@ use App\Api\V1\Transformers\IncidentTransformer;
 use App\Incident;
 use App\User;
 
+use WebSocket\Client;
+
 /**
  * @SWG\Get(
  *     path="/api/incidents",
@@ -172,9 +174,12 @@ class IncidentController extends Controller
         }
         
         $incident = new Incident($request->all());
-
-        if($incident->save())
+		
+        if($incident->save()) {
+        	$client = new Client(config('app.wsServerAddr'));
+        	$client->send(json_encode(array("data" => Reports::countiesWithIncidents())));
             return $this->response->created();
+        }
         else
             return $this->response->error('could_not_create_incident', 500);
     }
