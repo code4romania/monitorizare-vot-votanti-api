@@ -13,13 +13,13 @@ Main packages:
 * Apache or Nginx (mod_rewrite required);
 * MySQL;
 
-## Installation
+## Installationn
 
 ```bash
 composer install
 -- create database and add the database server configuration to .env file
 php artisan key:generate //Not sure if really neccesary
-php artisan jwt:generate 
+php artisan jwt:generate
 php artisan migrate --seed
 ```
 
