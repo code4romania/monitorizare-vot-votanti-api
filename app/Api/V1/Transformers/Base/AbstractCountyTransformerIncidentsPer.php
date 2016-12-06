@@ -8,8 +8,9 @@ abstract class AbstractCountyTransformerIncidentsPer extends Transformer
     public function transform($county)
     {
     	return [
-            'label' => $county['name'],
-    		'value' => $county->incidents()->count()
+    	    'id' => $county['id'],
+            'countyName' => $county['name'],
+    		'incidentsCount' => $county->incidents()->where('incident_type_id', $this->getIncidentTypeId())->count()
         ];
     }
     

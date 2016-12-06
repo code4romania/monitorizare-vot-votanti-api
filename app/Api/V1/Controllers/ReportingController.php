@@ -143,6 +143,38 @@ class ReportingController extends Controller
 		return response()->json($output);
 	}
 	
+	/**
+	 * Get all the reports in one endpoint
+	 */
+	public function all() {
+		$incidentsTotal = json_decode($this->incidentsTotal()->content(), true);
+		$incidentsTotal['sesizari'] = $incidentsTotal['data'];
+		unset($incidentsTotal['data']);
+		
+		$incidentsPerCounty = json_decode($this->incidentsPerCounty()->content(), true);
+		$incidentsPerCounty['sesizari-judete'] = $incidentsPerCounty['data'];
+		unset($incidentsPerCounty['data']);
+		
+		$incidentsOpeningPerCounty = json_decode($this->incidentsOpeningPerCounty()->content(), true);
+		$incidentsOpeningPerCounty['sesizari-deschidere-judete'] = $incidentsOpeningPerCounty['data'];
+		unset($incidentsOpeningPerCounty['data']);
+		
+		$incidentsCountingPerCounty = json_decode($this->incidentsCountingPerCounty()->content(), true);
+		$incidentsCountingPerCounty['sesizari-numarare-judete'] = $incidentsCountingPerCounty['data'];
+		unset($incidentsCountingPerCounty['data']);
+		
+		$incidentTypesPerCountyTops = json_decode($this->incidentTypesPerCountyTops()->content(), true);
+		$incidentTypesPerCountyTops['sesizari-tip-judete'] = $incidentTypesPerCountyTops['data'];
+		unset($incidentTypesPerCountyTops['data']);
+		
+		$output['data'] = array_merge($incidentsTotal, $incidentsPerCounty, $incidentsOpeningPerCounty, $incidentsCountingPerCounty, $incidentTypesPerCountyTops);
+		return response()->json($output);      
+	}
+	
+	/*
+	
+	$api->get('statistici/sesizari-tip-judete',   	   'App\Api\V1\Controllers\ReportingController@incidentTypesPerCountyTops'); */
+    
 	private function getIncidentTypeId($typeCode) {
 		$type = IncidentType::where('code', $typeCode)->first();
 		return $type->id;
@@ -161,3 +193,4 @@ class ReportingController extends Controller
 	}
 	
 }
+    

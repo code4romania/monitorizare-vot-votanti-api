@@ -37,6 +37,7 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 	$api->get('reports', 'App\Api\V1\Controllers\ReportsController@index');
 
 	//Reporting routes
+	$api->get('statistici', 				  		   'App\Api\V1\Controllers\ReportingController@all');
 	$api->get('statistici/sesizari', 				   'App\Api\V1\Controllers\ReportingController@incidentsTotal');
 	$api->get('statistici/sesizari-judete', 		   'App\Api\V1\Controllers\ReportingController@incidentsPerCounty');
 	$api->get('statistici/sesizari-sectii', 		   'App\Api\V1\Controllers\ReportingController@incidentsPerPrecinct');
