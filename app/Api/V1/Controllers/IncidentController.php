@@ -94,7 +94,7 @@ class IncidentController extends Controller
             $statuses = explode(',', $status);
             $query->whereIn('status', $statuses);
         } else {
-            $query->whereIn('status', 'Approved');
+            $query->whereIn('status', array('Approved'));
         }
 
         if ($county) {
