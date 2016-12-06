@@ -16,6 +16,7 @@ use App\Incident;
 use App\User;
 
 use WebSocket\Client;
+use App\County;
 
 class IncidentController extends Controller
 {
@@ -71,12 +72,24 @@ class IncidentController extends Controller
         $limit = min($limit, 200);
         $status = Input::get('status');
         $county = Input::get('county');
+        $incidentType = Input::get('type');
+        $map = Input::get('map');
 		
         $query = Incident::with('type')
             ->with('county')
             ->with('precinct')
             ->orderBy('created_at', 'desc');
-
+		if($map) {
+			$countyAbroad = County::where('code', 'DI')->first();
+			$countyAbroadId = $countyAbroad->id;
+			if($map == 'country') {
+				$query->where("county_id", '!=', $countyAbroadId);
+			}
+			if($map == 'abroad') {
+				$query->where("county_id", $countyAbroadId);
+			}
+		}
+            
         if ($status) {
             $statuses = explode(',', $status);
             $query->whereIn('status', $statuses);
@@ -87,6 +100,11 @@ class IncidentController extends Controller
         if ($county) {
             $ids = explode(',', $county);
             $query->whereIn('county_id', $ids);
+        }
+        
+        if($incidentType) {
+        	$incidentTypes = explode(',', $incidentType);
+        	$query->whereIn('incident_type_id', $incidentTypes);
         }
 
         $incidents = $query->paginate($limit);
