@@ -17,43 +17,6 @@ use App\User;
 
 use WebSocket\Client;
 
-/**
- * @SWG\Get(
- *     path="/api/incidents",
- *     summary="Fetch incidents",
- *     tags={"Incidents"},
- *     description="Fetch tags filtered by state.",
- *     operationId="findPetsByTags",
- *     consumes={"application/json"},
- *     produces={"application/json"},
- *     @SWG\Parameter(
- *         name="tags",
- *         in="query",
- *         description="Tags to filter by",
- *         required=false,
- *         type="array",
- *         @SWG\Items(type="string"),
- *         collectionFormat="multi"
- *     ),
- *     @SWG\Response(
- *         response=200,
- *         description="successful operation",
- *         @SWG\Schema(
- *             type="array",
- *             @SWG\Items(ref="#/definitions/Incident")
- *         ),
- *     ),
- *     @SWG\Response(
- *         response="400",
- *         description="Invalid tag value",
- *     ),
- *     security={
- *         {
- *             "monitorizare_auth": {"read:incidents"}
- *         }
- *     }
- * )
- */
 class IncidentController extends Controller
 {
     use Helpers;
@@ -65,19 +28,68 @@ class IncidentController extends Controller
         $this->incidentTransformer = $incidentTransformer;
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/api/incidents",
+     *     summary="Fetch incidents",
+     *     tags={"Incidents"},
+     *     description="Fetch tags filtered by state.",
+     *     operationId="findPetsByTags",
+     *     consumes={"application/json"},
+     *     produces={"application/json"},
+     *     @SWG\Parameter(
+     *         name="tags",
+     *         in="query",
+     *         description="Tags to filter by",
+     *         required=false,
+     *         type="array",
+     *         @SWG\Items(type="string"),
+     *         collectionFormat="multi"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @SWG\Schema(
+     *             type="array",
+     *             @SWG\Items(ref="#/definitions/Incident")
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response="400",
+     *         description="Invalid tag value",
+     *     ),
+     *     security={
+     *         {
+     *             "monitorizare_auth": {"read:incidents"}
+     *         }
+     *     }
+     * )
+     */
     public function index()
     {
         $limit = Input::get('limit') ?: 20;
         $limit = min($limit, 200);
-        $status = Input::get('status')  ?: 'Approved';
-		$status = array($status);
+        $status = Input::get('status');
+        $county = Input::get('county');
 		
-        $incidents = Incident::with('type')
+        $query = Incident::with('type')
             ->with('county')
             ->with('precinct')
-            ->whereIn('status', $status)
-            ->orderBy('created_at', 'desc')
-            ->paginate($limit);
+            ->orderBy('created_at', 'desc');
+
+        if ($status) {
+            $statuses = explode(',', $status);
+            $query->whereIn('status', $statuses);
+        } else {
+            $query->whereIn('status', 'Approved');
+        }
+
+        if ($county) {
+            $ids = explode(',', $county);
+            $query->whereIn('county_id', $ids);
+        }
+
+        $incidents = $query->paginate($limit);
         
         return response()->json([
             'data' => $this->incidentTransformer->transformCollection($incidents->all()),
