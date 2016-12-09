@@ -34,6 +34,7 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 	$api->get('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@show');
 	
 	$api->get('precincts', 'App\Api\V1\Controllers\PrecinctController@list');
+	$api->get('{cityId}/precincts', 'App\Api\V1\Controllers\PrecinctController@listPerCity');
 	
 	//Reports overview
 	$api->get('reports', 'App\Api\V1\Controllers\ReportsController@index');
