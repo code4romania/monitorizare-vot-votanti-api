@@ -21,7 +21,8 @@ class IncidentTransformer extends Transformer
                         'address' => $incident['precinct']['address']
                 ],
                 'status' => $incident['status'],
-                'createdAt' => $incident['created_at']->toDateTimeString()
+                'createdAt' => $incident['created_at']->toDateTimeString(),
+                'image' => $incident['image_url']
         ];
     }
 }

@@ -20,7 +20,8 @@
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*",
         "hoa/websocket": "~2.0",
-        "textalk/websocket": "1.0.*"
+        "textalk/websocket": "1.0.*",
+        "intervention/image": "2.3.*"
     },
     "autoload": {
         "classmap": [

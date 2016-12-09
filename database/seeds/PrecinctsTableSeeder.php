@@ -70,6 +70,8 @@ class PrecinctsTableSeeder extends Seeder
     private function parseDiasporaPrecincts($file) {
     	//get Diaspora county ID
     	$county = County::where('code', 'DI')->first();
+    	//get Diaspora city ID
+    	$city = City::where('name', 'Disapora city')->first();
     	//Put the precincts in the table
     	$f = fopen($file, "r");
     	$str = "";
@@ -80,7 +82,7 @@ class PrecinctsTableSeeder extends Seeder
     	foreach ($obj->markers as $marker) {
     		$precinct = new Precinct([
     				'county_id' => $county->id,
-    				'city_id' =>  0,
+    				'city_id' =>  $city->id,
     				'siruta_code' =>  0,
     				'circ_no' =>  $marker->country_id,
     				'precinct_no' =>  $marker->n,

@@ -17,6 +17,7 @@ use App\User;
 
 use WebSocket\Client;
 use App\County;
+use Intervention\Image\ImageManager;
 
 class IncidentController extends Controller
 {
@@ -204,11 +205,30 @@ class IncidentController extends Controller
             throw new StoreResourceFailedException('Could not create new incident.', $validator->errors());
         }
         
+        $file = Input::file('image');
+        $extension = strtolower(Input::file('image')->getClientOriginalExtension());
+        if($extension != "jpg" && $extension != "png") {
+            throw new \Exception("Image format is not supported!");
+        }
+        
         $incident = new Incident($request->all());
 		
         if($incident->save()) {
         	$client = new Client(config('app.wsServerAddr'));
         	$client->send(json_encode(array("data" => Reports::countiesWithIncidents())));
+        	try {
+            	$imagePath = base_path().'/public/assets/media/images/';
+            	$imageName = 'image_incident_'.$c=$incident->id.'.'.$extension;
+            	$file->move($imagePath, $imageName);
+            	$manager = new ImageManager();
+            	$image = $manager->make($imagePath.$imageName);
+            	$image->resize(1024, 1024*$image->height()/$image->width());
+            	$image->save($imagePath.$imageName);
+            	$incident->image_url = 'http://'.substr($request->root(), 7).'/assets/media/images/'.$imageName;
+            	$incident->save();
+        	} catch(Exception $e) {
+        	    throw new Exception("Image could not be saved!");
+        	}
             return $this->response->created();
         }
         else
