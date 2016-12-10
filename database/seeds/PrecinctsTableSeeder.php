@@ -82,7 +82,7 @@ class PrecinctsTableSeeder extends Seeder
     	foreach ($obj->markers as $marker) {
     		$precinct = new Precinct([
     				'county_id' => $county->id,
-    				'city_id' =>  $city->id,
+    				'city_id' =>  $city ? $city->id : 1,
     				'siruta_code' =>  0,
     				'circ_no' =>  $marker->country_id,
     				'precinct_no' =>  $marker->n,
