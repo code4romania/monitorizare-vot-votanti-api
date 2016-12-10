@@ -71,7 +71,7 @@ class PrecinctsTableSeeder extends Seeder
     	//get Diaspora county ID
     	$county = County::where('code', 'DI')->first();
     	//get Diaspora city ID
-    	$city = City::where('name', 'Disapora city')->first();
+    	$city = City::where('name', 'Disapora')->first();
     	//Put the precincts in the table
     	$f = fopen($file, "r");
     	$str = "";
