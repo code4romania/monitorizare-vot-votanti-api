@@ -221,8 +221,12 @@ class IncidentController extends Controller
         $incident = new Incident($request->all());
 		
         if($incident->save()) {
-        	$client = new Client(config('app.wsServerAddr'));
-        	$client->send(json_encode(array("data" => Reports::countiesWithIncidents())));
+            try {
+            	//$client = new Client(config('app.wsServerAddr'));
+            	//$client->send(json_encode(array("data" => Reports::countiesWithIncidents())));
+            } catch (Exception $e) {
+                
+            }
         	if($file != null) {
             	try {
                 	$imagePath = base_path().'/public/assets/media/images/';
