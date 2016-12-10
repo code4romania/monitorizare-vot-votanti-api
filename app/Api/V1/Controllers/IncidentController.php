@@ -207,13 +207,15 @@ class IncidentController extends Controller
 
         $catpcha_token = $request->input('recaptchaResponse');
         if (!$this->verifyCaptcha($catpcha_token)) {
-            throw new StoreResourceFailedException('Invalid captcha.');
+            //throw new StoreResourceFailedException('Invalid captcha.');
         }
         
         $file = Input::file('image');
-        $extension = strtolower(Input::file('image')->getClientOriginalExtension());
-        if($extension != "jpg" && $extension != "png") {
-            throw new \Exception("Image format is not supported!");
+        if($file != null) {
+            $extension = strtolower(Input::file('image')->getClientOriginalExtension());
+            if($extension != "jpg" && $extension != "png") {
+                throw new \Exception("Image format is not supported!");
+            }
         }
         
         $incident = new Incident($request->all());
@@ -221,18 +223,20 @@ class IncidentController extends Controller
         if($incident->save()) {
         	$client = new Client(config('app.wsServerAddr'));
         	$client->send(json_encode(array("data" => Reports::countiesWithIncidents())));
-        	try {
-            	$imagePath = base_path().'/public/assets/media/images/';
-            	$imageName = 'image_incident_'.$c=$incident->id.'.'.$extension;
-            	$file->move($imagePath, $imageName);
-            	$manager = new ImageManager();
-            	$image = $manager->make($imagePath.$imageName);
-            	$image->resize(1024, 1024*$image->height()/$image->width());
-            	$image->save($imagePath.$imageName);
-            	$incident->image_url = 'http://'.substr($request->root(), 7).'/assets/media/images/'.$imageName;
-            	$incident->save();
-        	} catch(Exception $e) {
-        	    throw new Exception("Image could not be saved!");
+        	if($file != null) {
+            	try {
+                	$imagePath = base_path().'/public/assets/media/images/';
+                	$imageName = 'image_incident_'.$c=$incident->id.'.'.$extension;
+                	$file->move($imagePath, $imageName);
+                	$manager = new ImageManager();
+                	$image = $manager->make($imagePath.$imageName);
+                	$image->resize(1024, 1024*$image->height()/$image->width());
+                	$image->save($imagePath.$imageName);
+                	$incident->image_url = 'http://'.substr($request->root(), 7).'/assets/media/images/'.$imageName;
+                	$incident->save();
+            	} catch(Exception $e) {
+            	    throw new Exception("Image could not be saved!");
+            	}
         	}
             return $this->response->created();
         }
