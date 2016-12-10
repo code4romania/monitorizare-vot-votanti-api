@@ -208,7 +208,7 @@ class IncidentController extends Controller
 
         $catpcha_token = $request->input('recaptchaResponse');
         if (!$this->verifyCaptcha($catpcha_token)) {
-            //throw new StoreResourceFailedException('Invalid captcha.');
+            throw new StoreResourceFailedException('Invalid captcha.');
         }
         
         $file = Input::file('image');
