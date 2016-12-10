@@ -204,6 +204,11 @@ class IncidentController extends Controller
         if ($validator->fails()) {
             throw new StoreResourceFailedException('Could not create new incident.', $validator->errors());
         }
+
+        $catpcha_token = $request->input('recaptchaResponse');
+        if (!$this->verifyCaptcha($catpcha_token)) {
+            throw new StoreResourceFailedException('Invalid captcha.');
+        }
         
         $file = Input::file('image');
         $extension = strtolower(Input::file('image')->getClientOriginalExtension());
@@ -291,5 +296,29 @@ class IncidentController extends Controller
         return response()->json([
             'error' => ['message' => 'Record does not exist']
         ], 404);
+    }
+
+    private function verifyCaptcha($token) {
+        if ($token) {
+            return false;
+        }
+        
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = array(
+            'secret' => env('RECAPTCHA_SECRET', '6LdLYg4UAAAAACq_l5nQTbwHX0BGGY1JhJw0fduW'),
+            'response' => $token
+        );
+
+        $options = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+        $context  = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
+        $result = json_decode($result);
+        return $result->success;
     }
 }
