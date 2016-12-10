@@ -100,19 +100,11 @@ class LocationController extends Controller
      */
     public function cities($countyId)
     {
-    	if($countyId == $this->getDiasporaCountyId()) {
-    		$cityTransformerAddress = new CityTransformerAddress();
-    		return response()->json([
-    				'data' => $cityTransformerAddress->transformCollection($this->getAddressesForDiaspora($countyId)->all())
-    		], 200);
-    	}
-    	else {
-	        $cities = City::where('county_id', $countyId)->get();
-	        
-	        return response()->json([
-	            'data' => $this->cityTransformer->transformCollection($cities->all())
-	        ], 200);
-    	}
+        $cities = City::where('county_id', $countyId)->get();
+        
+        return response()->json([
+            'data' => $this->cityTransformer->transformCollection($cities->all())
+        ], 200);
     }
     
     /**

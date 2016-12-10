@@ -23,7 +23,7 @@ class CitiesTableSeeder extends Seeder
 
         if ($citites) {
             foreach ($citites as $key => $city) {
-                if ($currentCity != $city['name']) {
+                if ($currentCity != $city['name'] && strlen(trim($city['countyCode'])) > 0) {
                     $currentCity = $city['name'];
                     $index++;
                     
@@ -60,6 +60,6 @@ class CitiesTableSeeder extends Seeder
                 return $county[0];
             }
         }
-        return 43;
+        return false;
     }
 }
