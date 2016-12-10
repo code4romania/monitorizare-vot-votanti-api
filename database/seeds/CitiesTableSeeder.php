@@ -40,7 +40,7 @@ class CitiesTableSeeder extends Seeder
         
         City::create([
                 'county_id' => $this->getCountyId('DI', $counties),
-                'name' => 'Disapora city',
+                'name' => 'Disapora',
                 'siruta_code' => '0',
                 'el_circle_code' => '0'
         ]);
