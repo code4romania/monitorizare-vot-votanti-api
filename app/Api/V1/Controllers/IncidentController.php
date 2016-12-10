@@ -18,6 +18,7 @@ use App\User;
 use WebSocket\Client;
 use App\County;
 use Intervention\Image\ImageManager;
+use WebSocket;
 
 class IncidentController extends Controller
 {
@@ -222,9 +223,9 @@ class IncidentController extends Controller
 		
         if($incident->save()) {
             try {
-            	//$client = new Client(config('app.wsServerAddr'));
-            	//$client->send(json_encode(array("data" => Reports::countiesWithIncidents())));
-            } catch (Exception $e) {
+            	$client = new Client(config('app.wsServerAddr'));
+            	$client->send(json_encode(array("data" => Reports::countiesWithIncidents())));
+            } catch (WebSocket\Exception $e) {
                 
             }
         	if($file != null) {
