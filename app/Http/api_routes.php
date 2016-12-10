@@ -15,8 +15,8 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 
 	//Admin only endpoints
 	$api->group(['middleware' => ['api.auth', 'role:admin']], function ($api) {
-		$api->put('incidents/{incidentId}/approve', 'App\Api\V1\Controllers\IncidentController@approve');
-		$api->put('incidents/{incidentId}/reject', 'App\Api\V1\Controllers\IncidentController@reject');
+		$api->post('incidents/{incidentId}/approve', 'App\Api\V1\Controllers\IncidentController@approve');
+		$api->post('incidents/{incidentId}/reject', 'App\Api\V1\Controllers\IncidentController@reject');
 		$api->delete('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@destroy');
 	});
 
