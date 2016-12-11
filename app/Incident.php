@@ -61,7 +61,7 @@ class Incident extends Model
     //public $description;
 
     protected $fillable = [
-    	'first_name', 'last_name', 'county_id', 'city_id', 'incident_type_id', 'station_number', 'description', 'image_url'
+        'first_name', 'last_name', 'county_id', 'city_id', 'incident_type_id', 'precinct_id', 'description', 'image_url'
     ];
 
     // One to many inverse relation to IncidentType model
@@ -69,7 +69,7 @@ class Incident extends Model
     {
     	return $this->belongsTo('App\IncidentType', 'incident_type_id', 'id');
     }
-    
+
     // One to many inverse relation to County model
     public function county()
     {

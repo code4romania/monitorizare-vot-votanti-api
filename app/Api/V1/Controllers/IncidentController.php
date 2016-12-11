@@ -15,10 +15,9 @@ use App\Api\V1\Transformers\IncidentTransformer;
 use App\Incident;
 use App\User;
 
-use WebSocket\Client;
 use App\County;
 use Intervention\Image\ImageManager;
-use WebSocket;
+// use WebSocket;
 
 class IncidentController extends Controller
 {
@@ -76,7 +75,7 @@ class IncidentController extends Controller
         $county = Input::get('county');
         $incidentType = Input::get('type');
         $map = Input::get('map');
-		
+
         $query = Incident::with('type')
             ->with('county')
             ->with('precinct')
@@ -91,7 +90,7 @@ class IncidentController extends Controller
 				$query->where("county_id", $countyAbroadId);
 			}
 		}
-            
+
         if ($status) {
             $statuses = explode(',', $status);
             $query->whereIn('status', $statuses);
@@ -103,14 +102,14 @@ class IncidentController extends Controller
             $ids = explode(',', $county);
             $query->whereIn('county_id', $ids);
         }
-        
+
         if($incidentType) {
         	$incidentTypes = explode(',', $incidentType);
         	$query->whereIn('incident_type_id', $incidentTypes);
         }
 
         $incidents = $query->paginate($limit);
-        
+
         return response()->json([
             'data' => $this->incidentTransformer->transformCollection($incidents->all()),
             'paginator' => $this->getPaginator($incidents)
@@ -191,15 +190,15 @@ class IncidentController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'firstName' => 'required|max:200',
-            'lastName' => 'required|max:200',
-            'incidentType' => 'required',
+            'first_name' => 'required|max:200',
+            'last_name' => 'required|max:200',
+            'incident_type_id' => 'required',
             'description' => 'required',
             'county_id' => 'required',
-            'city' => 'required',
-            'stationNumber' => 'required'
+            'city_id' => 'required',
+            'precinct_id' => 'required',
         ];
-        
+
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
@@ -210,7 +209,7 @@ class IncidentController extends Controller
         if (!$this->verifyCaptcha($catpcha_token)) {
             throw new StoreResourceFailedException('Invalid captcha.');
         }
-        
+
         $file = Input::file('image');
         if($file != null) {
             $extension = strtolower(Input::file('image')->getClientOriginalExtension());
@@ -218,17 +217,18 @@ class IncidentController extends Controller
                 throw new \Exception("Image format is not supported!");
             }
         }
-        
+
         $incident = new Incident($request->all());
         $incident->status = 'Pending';
-		
+
         if($incident->save()) {
-            try {
-            	$client = new Client(config('app.wsServerAddr'));
-            	$client->send(json_encode(array("data" => Reports::countiesWithIncidents())));
-            } catch (WebSocket\Exception $e) {
-                
-            }
+            // try {
+            // 	$client = new Client(config('app.wsServerAddr'));
+            // 	$client->send(json_encode(array("data" => Reports::countiesWithIncidents())));
+            // } catch (WebSocket\Exception $e) {
+
+            // }
+
         	if($file != null) {
             	try {
                 	$imagePath = base_path().'/public/assets/media/images/';
@@ -268,7 +268,7 @@ class IncidentController extends Controller
         $incident = Incident::find($incidentId);
         if (!$incident)
             return $this->notFoundResponse();
-        
+
         $incident->status = 'Rejected';
         if ($incident->save())
             return $this->response->noContent();
@@ -313,7 +313,7 @@ class IncidentController extends Controller
         if (!$token) {
             return false;
         }
-        
+
         $url = 'https://www.google.com/recaptcha/api/siteverify';
         $data = array(
             'secret' => env('RECAPTCHA_SECRET', '6LdLYg4UAAAAACq_l5nQTbwHX0BGGY1JhJw0fduW'),
