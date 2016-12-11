@@ -22,7 +22,7 @@ class CreateIncidentsTable extends Migration
             $table->string('incident_type_id');
             $table->string('description');
             $table->string('image_url');
-            $table->enum('status', ['Approved', 'Pending', 'Rejected'])->default('Approved');
+            $table->enum('status', ['Approved', 'Pending', 'Rejected'])->default('Pending');
             $table->timestamps();
         });
     }

@@ -16,15 +16,15 @@ class PrecinctController extends Controller
     {
         $precincts = Precinct::get();
         $precinctTransformer = new PrecinctTransformer();
-        
+
         return response()->json(['data' => $precinctTransformer->transformCollection($precincts->all())]);
     }
-    
+
     public function listPerCity($cityId)
     {
         $precincts = Precinct::where('city_id', intval($cityId))->get();
         $precinctTransformer = new PrecinctTransformer();
-    
+
         return response()->json(['data' => $precinctTransformer->transformCollection($precincts->all())]);
     }
 
