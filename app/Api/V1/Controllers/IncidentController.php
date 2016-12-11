@@ -308,7 +308,8 @@ class IncidentController extends Controller
     }
 
     private function verifyCaptcha($token) {
-        if ($token) {
+
+        if (!$token) {
             return false;
         }
         
@@ -328,6 +329,7 @@ class IncidentController extends Controller
         $context  = stream_context_create($options);
         $result = file_get_contents($url, false, $context);
         $result = json_decode($result);
+
         return $result->success;
     }
 }
