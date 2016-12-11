@@ -220,6 +220,7 @@ class IncidentController extends Controller
         }
         
         $incident = new Incident($request->all());
+        $incident->status = 'Pending';
 		
         if($incident->save()) {
             try {
