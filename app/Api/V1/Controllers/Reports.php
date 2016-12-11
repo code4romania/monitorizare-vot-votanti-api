@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Dingo\Api\Routing\Helpers;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Support\Facades\DB;
 
 use App\Api\V1\Transformers\CountiesWithIncidentsTransformer;
 
@@ -32,8 +33,8 @@ class Reports extends Controller
 
     public static function totalIncidentsByType()
     {
-        $groupedIncidents = Incident::groupBy('incident_type_id')
-            ->selectRaw('sum(incident_type_id) as count, incident_type_id')
+        $groupedIncidents = Incident::select(DB::raw('count(*) as count, incident_type_id'))
+            ->groupBy('incident_type_id')
             ->with('type')
             ->get();
         return $groupedIncidents;
