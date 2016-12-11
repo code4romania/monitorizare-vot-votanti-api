@@ -9,7 +9,7 @@ class CountiesWithIncidentsTransformer extends Transformer
     	return [
             'id' => $county['id'],
             'countyName' => $county['name'],
-    		'incidentsCount' => $county->incidents()->count()
+    		'incidentsCount' => $county->incidents()->where('status', 'Approved')->count()
         ];
     }
 }

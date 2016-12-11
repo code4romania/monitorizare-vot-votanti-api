@@ -21,7 +21,7 @@ class Reports extends Controller
 
     public static function totalIncidents()
     {
-        return Incident::count();
+        return Incident::where('status', 'Approved')->count();
     }
 
     public static function countiesWithIncidents()
@@ -34,6 +34,7 @@ class Reports extends Controller
     public static function totalIncidentsByType()
     {
         $groupedIncidents = Incident::select(DB::raw('count(*) as count, incident_type_id'))
+            ->where('status', 'Approved')
             ->groupBy('incident_type_id')
             ->with('type')
             ->get();
