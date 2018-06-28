@@ -9,6 +9,7 @@ Main packages:
 * Laravel-CORS [barryvdh/laravel-cors](http://github.com/barryvdh/laravel-cors)
 
 ## Requirements
+
 * PHP 7+ (with mbstring, openSSL extensions);
 * Apache or Nginx (mod_rewrite required);
 * MySQL;
