@@ -33,21 +33,17 @@ Main packages:
 
 Related projects:
 
-https://github.com/code4romania/monitorizare-vot
+- client app - https://github.com/code4romania/monitorizare-vot-votanti-client/
+- admin app - https://github.com/code4romania/monitorizare-vot-votanti-admin
 
-https://github.com/code4romania/monitorizare-vot-admin
+Othe MV related repos:
 
-https://github.com/code4romania/monitorizare-vot-ong
-
-https://github.com/code4romania/monitorizare-vot-votanti-client/
-
-https://github.com/code4romania/monitorizare-vot-android
-
-https://github.com/code4romania/monitorizare-vot-ios
-
-https://github.com/code4romania/monitorizare-vot-docs
-
-https://github.com/code4romania/monitorizare-vot-votanti-admin
+- https://github.com/code4romania/monitorizare-vot-admin
+- https://github.com/code4romania/monitorizare-vot-ong
+- https://github.com/code4romania/monitorizare-vot
+- https://github.com/code4romania/monitorizare-vot-android
+- https://github.com/code4romania/monitorizare-vot-ios
+- https://github.com/code4romania/monitorizare-vot-docs
 
 ## Deployment
 
