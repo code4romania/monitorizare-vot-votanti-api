@@ -36,7 +36,7 @@ Related projects:
 - client app - https://github.com/code4romania/monitorizare-vot-votanti-client/
 - admin app - https://github.com/code4romania/monitorizare-vot-votanti-admin
 
-Othe MV related repos:
+Other MV related repos:
 
 - https://github.com/code4romania/monitorizare-vot-admin
 - https://github.com/code4romania/monitorizare-vot-ong
