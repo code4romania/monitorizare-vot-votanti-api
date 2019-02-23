@@ -14,6 +14,8 @@ class CreateIncidentTypesTable extends Migration
     {
         Schema::create('incident_types', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('label');
+            $table->string('code');
             $table->string('name');
         });
     }

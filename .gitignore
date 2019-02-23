@@ -17,6 +17,10 @@ logs
 *.log
 npm-debug.log*
 
+### Azure ###
+azuredeploy.json
+EULA_ENU.rtf
+
 # Runtime data
 pids
 *.pid
@@ -130,3 +134,10 @@ bootstrap/cache/*.php
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
+
+# Eclipse
+.project
+build.xml
+.buildpath
+.settings
+.externalToolBuilders

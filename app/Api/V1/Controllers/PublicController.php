@@ -16,6 +16,7 @@ class PublicController extends Controller
     public function check()
     {
         return response()->json([
+            'project_name' => 'Monitorizare Vot',
             'version' => '1.0'
         ], 200);
     }

@@ -2,10 +2,11 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Event;
-use App\Guest;
-use App\Product;
+use App\IncidentType;
+use App\Incident;
 use App\User;
+use App\City;
+use App\County;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,9 +17,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        IncidentType::truncate();
+        Incident::truncate();
+        City::truncate();
+        County::truncate();
         User::truncate();
         Eloquent::unguard();
 
+        $this->call(CountiesTableSeeder::class);
+        $this->call(CitiesTableSeeder::class);
+        $this->call(IncidentTypesTableSeeder::class);
+        //$this->call(IncidentsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(PrecinctsTableSeeder::class);
     }
 }

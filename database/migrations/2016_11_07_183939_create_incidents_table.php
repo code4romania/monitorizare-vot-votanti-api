@@ -16,12 +16,13 @@ class CreateIncidentsTable extends Migration
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('county');
-            $table->string('city');
+            $table->integer('county_id');
+            $table->integer('city_id');
+            $table->integer('precinct_id');
             $table->string('incident_type_id');
-            $table->string('station_number');
             $table->string('description');
             $table->string('image_url');
+            $table->enum('status', ['Approved', 'Pending', 'Rejected'])->default('Pending');
             $table->timestamps();
         });
     }
