@@ -82,9 +82,9 @@ class PageController extends Controller
     public function update(Request $request, int $id)
     {
         $rules = [
-            'title' => 'required|max:200',
-            'status' => 'required|in:Active,Inactive',
-            'description' => 'required|max:500',
+            'title' => 'max:200',
+            'status' => 'in:Active,Inactive',
+            'description' => 'max:500',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
