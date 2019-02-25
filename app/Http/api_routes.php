@@ -23,6 +23,8 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
         $api->post('page', 'App\Api\V1\Controllers\PageController@store');
         $api->put('page/{id}', 'App\Api\V1\Controllers\PageController@update');
         $api->delete('page/{id}', 'App\Api\V1\Controllers\PageController@destroy');
+        $api->post('page/{id}/approve', 'App\Api\V1\Controllers\PageController@approve');
+        $api->post('page/{id}/reject', 'App\Api\V1\Controllers\PageController@reject');
 	});
 
 	//Public routes

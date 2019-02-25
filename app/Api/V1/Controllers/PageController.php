@@ -119,4 +119,40 @@ class PageController extends Controller
             return $this->response->error('could_not_delete_page', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse|void
+     */
+    public function approve(int $id)
+    {
+        try {
+            $page = Page::findOrFail($id);
+            $page->setAttribute('status', Page::ACTIVE);
+            $page->save();
+            return $this->response->noContent();
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return $this->notFoundResponse();
+        } catch (\Exception $exception) {
+            return $this->response->error('could_not_approve_page', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse|void
+     */
+    public function reject(int $id)
+    {
+        try {
+            $page = Page::findOrFail($id);
+            $page->setAttribute('status', Page::INACTIVE);
+            $page->save();
+            return $this->response->noContent();
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return $this->notFoundResponse();
+        } catch (\Exception $exception) {
+            return $this->response->error('could_not_reject_page', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
