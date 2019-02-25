@@ -1,5 +1,5 @@
 <?php
-	
+
 $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1',  ['middleware' => 'cors'], function ($api) {
@@ -18,6 +18,11 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 		$api->post('incidents/{incidentId}/approve', 'App\Api\V1\Controllers\IncidentController@approve');
 		$api->post('incidents/{incidentId}/reject', 'App\Api\V1\Controllers\IncidentController@reject');
 		$api->delete('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@destroy');
+        //Pages routes
+        $api->get('page', 'App\Api\V1\Controllers\PageController@index');
+        $api->post('page', 'App\Api\V1\Controllers\PageController@store');
+        $api->put('page/{id}', 'App\Api\V1\Controllers\PageController@update');
+        $api->delete('page/{id}', 'App\Api\V1\Controllers\PageController@destroy');
 	});
 
 	//Public routes
@@ -31,13 +36,13 @@ $api->version('v1',  ['middleware' => 'cors'], function ($api) {
 	$api->get('incidents', 'App\Api\V1\Controllers\IncidentController@index');
 	$api->get('incidents/types', 'App\Api\V1\Controllers\IncidentTypeController@index');
 	$api->get('incidents/{incidentId}', 'App\Api\V1\Controllers\IncidentController@show');
-	
+
 	// Create incident
 	$api->post('incidents', 'App\Api\V1\Controllers\IncidentController@store');
-	
+
 	//$api->get('precincts', 'App\Api\V1\Controllers\PrecinctController@list');
 	$api->get('{cityId}/precincts', 'App\Api\V1\Controllers\PrecinctController@listPerCity');
-	
+
 	//Reports overview
 	$api->get('reports', 'App\Api\V1\Controllers\ReportsController@index');
 

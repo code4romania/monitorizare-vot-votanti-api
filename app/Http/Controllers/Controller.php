@@ -15,4 +15,23 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
+
+    public function getPaginator($items)
+    {
+        return [
+            'total' => $items->total(),
+            'currentPage' => $items->currentPage(),
+            'lastPage' => $items->lastPage(),
+            'limit' => $items->perPage(),
+            'previousPage' => $items->previousPageUrl(),
+            'nextPage' => $items->nextPageUrl()
+        ];
+    }
+
+    public function notFoundResponse()
+    {
+        return response()->json([
+            'error' => ['message' => 'Record does not exist']
+        ], 404);
+    }
 }

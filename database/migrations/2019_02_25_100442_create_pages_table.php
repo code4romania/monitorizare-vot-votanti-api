@@ -16,7 +16,7 @@ class CreatePagesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->enum('status', ['Active', 'Inactive'])->default('Inactive');
-            $table->string('description');
+            $table->string('description', 500);
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
