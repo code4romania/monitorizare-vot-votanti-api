@@ -7,6 +7,7 @@ class PageTransformer extends Transformer
     public function transform($item)
     {
         return [
+            'id' => $item['id'],
             'title' => $item['title'],
             'status' => $item['status'],
             'description' => $item['description'],
