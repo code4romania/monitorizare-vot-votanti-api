@@ -16,7 +16,11 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, AuthorizesResources, DispatchesJobs, ValidatesRequests;
 
-    public function getPaginator($items)
+    /**
+     * @param $items
+     * @return array
+     */
+    public function getPaginator($items): array
     {
         return [
             'total' => $items->total(),
@@ -28,6 +32,9 @@ class Controller extends BaseController
         ];
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function notFoundResponse()
     {
         return response()->json([
