@@ -20,7 +20,7 @@ class Controller extends BaseController
      * @param $items
      * @return array
      */
-    public function getPaginator($items): array
+    public function getPaginator($items)
     {
         return [
             'total' => $items->total(),
