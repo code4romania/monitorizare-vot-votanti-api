@@ -19,14 +19,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
+		Schema::disableForeignKeyConstraints();
         IncidentType::truncate();
-        Incident::truncate();
-        City::truncate();
-        County::truncate();
-        Precinct::truncate();
-        User::getQuery()->delete();
-        Eloquent::unguard();
-
+		Schema::enableForeignKeyConstraints();
+		Incident::truncate();
+		City::truncate();
+		County::truncate();
+		Precinct::truncate();
+		User::getQuery()->delete();
+		Eloquent::unguard();
         $this->call(CountiesTableSeeder::class);
         $this->call(CitiesTableSeeder::class);
         $this->call(IncidentTypesTableSeeder::class);
