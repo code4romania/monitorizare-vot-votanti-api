@@ -1,5 +1,6 @@
 <?php
 
+use App\Precinct;
 use Illuminate\Database\Seeder;
 
 use App\IncidentType;
@@ -18,18 +19,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
+		Schema::disableForeignKeyConstraints();
         IncidentType::truncate();
-        Incident::truncate();
-        City::truncate();
-        County::truncate();
-        User::truncate();
-        Eloquent::unguard();
-
+		Schema::enableForeignKeyConstraints();
+		Incident::truncate();
+		City::truncate();
+		County::truncate();
+		Precinct::truncate();
+		User::getQuery()->delete();
+		Eloquent::unguard();
         $this->call(CountiesTableSeeder::class);
         $this->call(CitiesTableSeeder::class);
         $this->call(IncidentTypesTableSeeder::class);
         //$this->call(IncidentsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(PrecinctsTableSeeder::class);
+        $this->call(PagesTableSeeder::class);
     }
 }
